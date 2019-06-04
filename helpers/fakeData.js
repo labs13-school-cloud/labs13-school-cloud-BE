@@ -11,16 +11,18 @@ module.exports = {
   createFakeUsers,
   createFakeTrainingSeries,
   createFakeTeamMembers,
-  createFakeMessages
+  createFakeMessages,
+  createFakeClasses
 };
 
 function createFakeUsers() {
   const newUsers = [];
   const fakeUser = () => ({
-    name: faker.name.findName(),
+    first_name: faker.name.firstName(),
+    last_name: faker.name.lastName(),
     email: faker.internet.email(),
-    notifications_sent: 0,
-    account_type_id: faker.random.number({ min: 1, max: 3 })
+    approved: faker.random.boolean(),
+    donator: faker.random.boolean()
   });
   for (let i = 0; i < userSeeds; i++) {
     newUsers.push(fakeUser());
@@ -75,12 +77,27 @@ function createFakeMessages() {
       min: 1,
       max: seriesSeeds
     }),
-    for_manager: false,
-    for_mentor: false,
+    for_volunteer: faker.random.boolean(),
     days_from_start: faker.random.number({ min: 1, max: 100 })
   });
   for (let i = 0; i < messageSeeds; i++) {
     newMessages.push(fakeMessage());
   }
   return newMessages;
+}
+
+function createFakeClasses() {
+  const newClasses = [];
+  const fakeClasses = () => ({
+    class_name: faker.name.firstName(),
+    grade_level: faker.random.number({ min: 1, max: 18 }),
+    subject: faker.commerce.department(),
+    number_of_students: faker.random.number({ min: 1, max: 18 }),
+    volunteer_id: faker.random.number({ min: 1, max: userSeeds })
+  });
+  for (let i = 0; i < userSeeds; i++) {
+    newClasses.push(fakeClasses());
+  }
+
+  return newClasses;
 }
