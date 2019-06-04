@@ -10,7 +10,6 @@ const messageSeeds = 20;
 module.exports = {
   createFakeUsers,
   createFakeTrainingSeries,
-  createFakeTeamMembers,
   createFakeMessages,
   createFakeClasses
 };
@@ -18,11 +17,10 @@ module.exports = {
 function createFakeUsers() {
   const newUsers = [];
   const fakeUser = () => ({
-    first_name: faker.name.firstName(),
-    last_name: faker.name.lastName(),
+    name: faker.name.findName(),
     email: faker.internet.email(),
-    approved: faker.random.boolean(),
-    donator: faker.random.boolean()
+    notifications_sent: 0,
+    account_type_id: faker.random.number({ min: 1, max: 3 })
   });
   for (let i = 0; i < userSeeds; i++) {
     newUsers.push(fakeUser());
@@ -47,26 +45,6 @@ function createFakeTrainingSeries() {
   return newSeries;
 }
 
-function createFakeTeamMembers() {
-  const newTeamMembers = [];
-  const fakeTeamMember = () => ({
-    first_name: faker.name.firstName(),
-    last_name: faker.name.lastName(),
-    job_description: faker.commerce.department(),
-    email: faker.internet.email(),
-    phone_number: faker.phone.phoneNumber(),
-    slack_uuid: uuidv4(),
-    user_id: faker.random.number({ min: 1, max: userSeeds }),
-    manager_id: faker.random.number({ min: 1, max: memberSeeds }),
-    mentor_id: faker.random.number({ min: 1, max: memberSeeds })
-  });
-  for (let i = 0; i < memberSeeds; i++) {
-    newTeamMembers.push(fakeTeamMember());
-  }
-
-  return newTeamMembers;
-}
-
 function createFakeMessages() {
   const newMessages = [];
   const fakeMessage = () => ({
@@ -77,7 +55,8 @@ function createFakeMessages() {
       min: 1,
       max: seriesSeeds
     }),
-    for_volunteer: faker.random.boolean(),
+    for_manager: false,
+    for_mentor: false,
     days_from_start: faker.random.number({ min: 1, max: 100 })
   });
   for (let i = 0; i < messageSeeds; i++) {
@@ -90,10 +69,10 @@ function createFakeClasses() {
   const newClasses = [];
   const fakeClasses = () => ({
     class_name: faker.name.firstName(),
-    grade_level: faker.random.number({ min: 1, max: 18 }),
+    grade_level: faker.random.number({ min: 1, max: 11 }),
     subject: faker.commerce.department(),
-    number_of_students: faker.random.number({ min: 1, max: 18 }),
-    volunteer_id: faker.random.number({ min: 1, max: userSeeds })
+    number_of_students: faker.random.number({ min: 1, max: 5 }),
+    volunteer_id: faker.random.number({ min: 1, max: 50 })
   });
   for (let i = 0; i < userSeeds; i++) {
     newClasses.push(fakeClasses());

@@ -1,13 +1,27 @@
 exports.up = function(knex, Promise) {
   return knex.schema
+    .createTable("account_types", tbl => {
+      tbl.increments();
+      tbl.text("title").notNullable();
+      tbl.integer("max_notification_count").notNullable();
+    })
     .createTable("users", tbl => {
       tbl.increments();
-      tbl.text("first_name").notNullable();
-      tbl.text("last_name").notNullable();
+      tbl.text("name").notNullable();
       tbl.text("email").notNullable();
       tbl.text("stripe");
-      tbl.boolean("approved");
-      tbl.boolean("donator");
+      tbl
+        .integer("notifications_sent")
+        .notNullable()
+        .defaultTo(0);
+      tbl
+        .integer("account_type_id")
+        .references("id")
+        .inTable("account_types")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+        .notNullable()
+        .defaultTo(1);
     })
     .createTable("services", tbl => {
       tbl.increments();
@@ -22,14 +36,14 @@ exports.up = function(knex, Promise) {
         .integer("service_id")
         .references("id")
         .inTable("services")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
       tbl
         .integer("user_id")
         .references("id")
         .inTable("users")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
     })
@@ -37,9 +51,15 @@ exports.up = function(knex, Promise) {
       tbl.increments();
       tbl.text("class_name").notNullable();
       tbl.text("grade_level").notNullable();
-      tbl.text("subject").notNullable();
+      tbl.text("subject");
       tbl.integer("number_of_students");
-      tbl.integer("volunteer_id").notNullable();
+      tbl
+        .integer("volunteer_id")
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+        .notNullable();
     })
     .createTable("training_series", tbl => {
       tbl.increments();
@@ -48,7 +68,7 @@ exports.up = function(knex, Promise) {
         .integer("user_id")
         .references("id")
         .inTable("users")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
     })
@@ -61,10 +81,17 @@ exports.up = function(knex, Promise) {
         .integer("training_series_id")
         .references("id")
         .inTable("training_series")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
-      tbl.boolean("for_volunteer").notNullable();
+      tbl
+        .boolean("for_manager")
+        .notNullable()
+        .defaultTo(false);
+      tbl
+        .boolean("for_mentor")
+        .notNullable()
+        .defaultTo(false);
       tbl.integer("days_from_start").notNullable();
     })
     .createTable("notifications", tbl => {
@@ -83,21 +110,21 @@ exports.up = function(knex, Promise) {
         .integer("message_id")
         .references("id")
         .inTable("messages")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
       tbl
         .integer("service_id")
         .references("id")
         .inTable("services")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
       tbl
         .integer("recipient_id")
         .references("id")
         .inTable("users")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
     })
@@ -108,7 +135,7 @@ exports.up = function(knex, Promise) {
         .integer("notification_id")
         .references("id")
         .inTable("notifications")
-        .onDelete("RESTRICT")
+        .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
       tbl
@@ -127,5 +154,6 @@ exports.down = function(knex, Promise) {
     .dropTableIfExists("classes")
     .dropTableIfExists("tokens")
     .dropTableIfExists("services")
-    .dropTableIfExists("users");
+    .dropTableIfExists("users")
+    .dropTableIfExists("account_types");
 };
