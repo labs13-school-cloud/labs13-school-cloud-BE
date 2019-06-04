@@ -1,17 +1,24 @@
 const Joi = require("@hapi/joi");
 
-// first_name, last_name, email, roles, stripe, approved, donator
+// need: first_name, last_name, email, roles, stripe, approved, donator
 
 const userSchema = {
-  first_name: Joi.string().required(),
-  last_name: Joi.string().required(),
+  name: Joi.string()
+    .max(255)
+    .required(),
   email: Joi.string()
     .email({ minDomainSegments: 2 })
     .required(),
   stripe: Joi.string(),
-  roles: Joi.string().required(),
-  approved: Joi.boolean(),
-  donator: Joi.boolean()
+  notifications_sent: Joi.number()
+    .integer()
+    .min(0)
+    .required(),
+  account_type_id: Joi.number()
+    .integer()
+    .min(1)
+    .max(3)
+    .required()
 };
 
 // class_name, grade_level, subject, number_of_students, volunteer_id
@@ -49,7 +56,9 @@ const messageSchema = {
     .integer()
     .min(1)
     .required(),
-  for_volunteer: Joi.boolean(),
+  for_manager: Joi.boolean(),
+  for_mentor: Joi.boolean(),
+  for_team_member: Joi.boolean(),
   days_from_start: Joi.number()
     .integer()
     .min(1)
