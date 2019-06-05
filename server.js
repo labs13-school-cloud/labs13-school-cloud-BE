@@ -35,7 +35,7 @@ server.use("/api/slack", authentication, slackRouter);
 server.use("/api/notifications", authentication, notificationsRouter);
 server.use("/api/responses", responsesRouter);
 
-//Default Endpoints
+//Default Sanity Check Endpoint
 server.get("/", (req, res) => {
   res.send("It works!");
 });
