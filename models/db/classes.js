@@ -1,7 +1,8 @@
 const db = require('../index');
 
 module.exports = {
-    find
+    find,
+    add
 }
 
 /**
@@ -29,5 +30,22 @@ function find(filters) {
         //
         .where(filters)
 }
+
+/**
+ * Add a Class to the database
+ * 
+ * @function
+ * 
+ * @param {Object} class - A class object
+ * @see https://knexjs.org/#Builder-insert
+ * 
+ * @returns {Promise} - A Promise that resolves to the newly created Class
+ */
+function add(class) {
+    return db('classes AS c')
+    .insert(class, ["*"])
+    .then(c => find({ "c.id": c[0].id }).first())
+}
+
 
 
