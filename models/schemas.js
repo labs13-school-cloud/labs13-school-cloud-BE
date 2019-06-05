@@ -1,5 +1,7 @@
 const Joi = require("@hapi/joi");
 
+// need: first_name, last_name, email, roles, stripe, approved, donator
+
 const userSchema = {
   name: Joi.string()
     .max(255)
@@ -19,30 +21,20 @@ const userSchema = {
     .required()
 };
 
-const teamMemberSchema = {
-  first_name: Joi.string().required(),
-  last_name: Joi.string().required(),
-  job_description: Joi.string(),
-  email: Joi.string()
-    .email({ minDomainSegments: 2 })
-    .allow(""),
-  phone_number: Joi.string(),
-  slack_uuid: Joi.string()
-    .token()
-    .allow(""),
-  user_id: Joi.number()
+// class_name, grade_level, subject, number_of_students, volunteer_id
+
+const classesSchema = {
+  class_name: Joi.string().required(),
+  grade_level: Joi.number()
     .integer()
-    .min(1)
     .required(),
-  manager_id: Joi.number()
+  subject: Joi.string().required(),
+  number_of_students: Joi.number()
+    .integer(),
+  volunteer_id: Joi.number()
     .integer()
-    .min(1)
-    .allow(null),
-  mentor_id: Joi.number()
-    .integer()
-    .min(1)
-    .allow(null)
-};
+    .required()
+}
 
 const trainingSeriesSchema = {
   title: Joi.string().required(),
@@ -51,6 +43,8 @@ const trainingSeriesSchema = {
     .min(1)
     .required()
 };
+
+// id, subject, body, link, training_series_id, for_volunteer, days_from_start
 
 const messageSchema = {
   subject: Joi.string().required(),
@@ -88,6 +82,8 @@ const tokenSchema = {
     .required()
 };
 
+// send_date, is_sent, num_attempts, thread, message_id, recipient_id, service_id
+
 const notificationSchema = {
   message_id: Joi.number()
     .integer()
@@ -97,7 +93,7 @@ const notificationSchema = {
     .integer()
     .min(1)
     .required(),
-  team_member_id: Joi.number()
+  recipient_id: Joi.number()
     .integer()
     .min(1)
     .required(),
@@ -109,9 +105,6 @@ const notificationSchema = {
     .integer()
     .min(0),
   thread: Joi.string(),
-  recipient_id: Joi.number()
-    .integer()
-    .min(1)
 };
 
 const responseSchema = {
@@ -125,7 +118,7 @@ const responseSchema = {
 
 module.exports = {
   userSchema,
-  teamMemberSchema,
+  classesSchema,
   trainingSeriesSchema,
   messageSchema,
   tokenSchema,

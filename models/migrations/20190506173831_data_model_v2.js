@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
       tbl.text("last_name").notNullable();
       tbl.text("email").notNullable();
       tbl.text("stripe");
-      tbl.text("role").notNullable();
+      tbl.text("role").defaultTo("volunteer");
       tbl.boolean("approved").defaultTo(0);
       tbl.boolean("donator").defaultTo(0);
     })
