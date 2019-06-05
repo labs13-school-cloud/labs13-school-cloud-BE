@@ -2,7 +2,8 @@ const db = require('../index');
 
 module.exports = {
     find,
-    add
+    add,
+    update
 }
 
 /**
@@ -47,5 +48,21 @@ function add(class) {
     .then(c => find({ "c.id": c[0].id }).first())
 }
 
-
+/**
+ * Update a Class to the database
+ * 
+ * @function
+ * 
+ * @param {Object} filters
+ * 
+ * @param {Object} changes
+ * 
+ * @returns {Promise}
+ */
+function update(filters, changes) {
+    return db("classes AS c")
+        .update(changes, ["*"])
+        .where(filters)
+        .then(c => find({ "c.id": c[0].id }).first());
+}
 
