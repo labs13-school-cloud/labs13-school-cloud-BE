@@ -4,6 +4,32 @@ const router = require("express").Router();
 //Models
 const Users = require("../models/db/users");
 
+router.route("/")
+  .get(async (req, res) => {
+    /**
+     * Get all users associated with an authenticated user
+     *
+     * @function
+     * @param {Object} req - The Express request object
+     * @param {Object} res - The Express response object
+     * @returns {Object} - The Express response object
+     */
+
+  try {
+    const users = await db ("users").select("u.id AS id",
+    "u.name AS name",
+    "u.email AS email",
+    "u.stripe AS stripe",
+    "u.notifications_sent",
+    "a.account_type AS subscription",
+    "a.max_notification_count");
+    // Return all users to client
+    res.status(200).json({ users });
+  } catch(err) {
+    res.status(500).json({message: `Server error`, error:err});
+  } 
+  })
+
 router.route("/:id")
   .delete(async (req, res) => {
     /** 
@@ -29,5 +55,7 @@ router.route("/:id")
       message: "User account removed successfully." 
     });
   });
+
+  
 
 module.exports = router;
