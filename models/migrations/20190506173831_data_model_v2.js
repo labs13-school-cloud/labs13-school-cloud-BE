@@ -47,33 +47,19 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE")
         .notNullable();
     })
-    .createTable("team_members", tbl => {
+    .createTable("classes", tbl => {
       tbl.increments();
-      tbl.text("first_name").notNullable();
-      tbl.text("last_name").notNullable();
-      tbl.text("job_description");
-      tbl.text("email");
-      tbl.text("phone_number");
-      tbl.text("slack_uuid");
+      tbl.text("class_name").notNullable();
+      tbl.text("grade_level").notNullable();
+      tbl.text("subject");
+      tbl.integer("number_of_students");
       tbl
-        .integer("user_id")
+        .integer("volunteer_id")
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
-      tbl
-        .integer("manager_id")
-        .references("id")
-        .inTable("team_members")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-      tbl
-        .integer("mentor_id")
-        .references("id")
-        .inTable("team_members")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
     })
     .createTable("training_series", tbl => {
       tbl.increments();
@@ -135,9 +121,9 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE")
         .notNullable();
       tbl
-        .integer("team_member_id")
+        .integer("recipient_id")
         .references("id")
-        .inTable("team_members")
+        .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
@@ -165,7 +151,7 @@ exports.down = function(knex, Promise) {
     .dropTableIfExists("notifications")
     .dropTableIfExists("messages")
     .dropTableIfExists("training_series")
-    .dropTableIfExists("team_members")
+    .dropTableIfExists("classes")
     .dropTableIfExists("tokens")
     .dropTableIfExists("services")
     .dropTableIfExists("users")
