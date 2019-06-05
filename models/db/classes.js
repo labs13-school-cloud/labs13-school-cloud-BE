@@ -66,3 +66,17 @@ function update(filters, changes) {
         .then(c => find({ "c.id": c[0].id }).first());
 }
 
+/**
+ * Delete a specific Class from the database
+ * 
+ * @function
+ * 
+ * @param {Object} filters
+ * 
+ * @returns {Promise}
+ */
+function remove(filters) {
+    return db("classes AS c")
+        .where(filters)
+        .del();
+}
