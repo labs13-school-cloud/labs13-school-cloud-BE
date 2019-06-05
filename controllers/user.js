@@ -40,7 +40,7 @@ router.route("/:id")
      * @param {Object} res - The Express response object
      * @returns {Object} - The Express response object
      */
-    const users = await debug("users").select("u.id AS id",
+    const users = await db ("users").select("u.id AS id",
     "u.name AS name",
     "u.email AS email",
     "u.stripe AS stripe",
