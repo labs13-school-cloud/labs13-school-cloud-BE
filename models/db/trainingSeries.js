@@ -4,7 +4,8 @@ module.exports = {
   add,
   find,
   update,
-  remove
+  remove,
+  getAll
 };
 
 /**
@@ -22,6 +23,11 @@ function find(filters) {
     .select("ts.id", "ts.title", "u.email AS user")
     .join("users AS u", { "ts.user_id": "u.id" })
     .where(filters);
+}
+
+function getAll() {
+    return db("training_series")
+        .then(training_series => console.log(training_series))
 }
 
 /**
