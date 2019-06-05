@@ -3,7 +3,8 @@ const db = require('../index');
 module.exports = {
     find,
     add,
-    update
+    update,
+    remove
 }
 
 /**
