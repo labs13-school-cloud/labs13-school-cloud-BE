@@ -70,7 +70,7 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE")
         .notNullable();
       tbl
-        .integer("training_series")
+        .integer("training_series_id")
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
