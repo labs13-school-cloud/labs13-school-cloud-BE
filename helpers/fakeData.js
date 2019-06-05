@@ -17,10 +17,10 @@ module.exports = {
 function createFakeUsers() {
   const newUsers = [];
   const fakeUser = () => ({
-    name: faker.name.findName(),
+    first_name: faker.name.firstName(),
+    last_name: faker.name.lastName(),
     email: faker.internet.email(),
-    notifications_sent: 0,
-    account_type_id: faker.random.number({ min: 1, max: 3 })
+    role: "volunteer"
   });
   for (let i = 0; i < userSeeds; i++) {
     newUsers.push(fakeUser());
@@ -55,8 +55,6 @@ function createFakeMessages() {
       min: 1,
       max: seriesSeeds
     }),
-    for_manager: false,
-    for_mentor: false,
     days_from_start: faker.random.number({ min: 1, max: 100 })
   });
   for (let i = 0; i < messageSeeds; i++) {

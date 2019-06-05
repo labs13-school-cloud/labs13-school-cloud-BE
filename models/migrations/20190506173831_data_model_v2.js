@@ -1,27 +1,14 @@
 exports.up = function(knex, Promise) {
   return knex.schema
-    .createTable("account_types", tbl => {
-      tbl.increments();
-      tbl.text("title").notNullable();
-      tbl.integer("max_notification_count").notNullable();
-    })
     .createTable("users", tbl => {
       tbl.increments();
-      tbl.text("name").notNullable();
+      tbl.text("first_name").notNullable();
+      tbl.text("last_name").notNullable();
       tbl.text("email").notNullable();
       tbl.text("stripe");
-      tbl
-        .integer("notifications_sent")
-        .notNullable()
-        .defaultTo(0);
-      tbl
-        .integer("account_type_id")
-        .references("id")
-        .inTable("account_types")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE")
-        .notNullable()
-        .defaultTo(1);
+      tbl.text("role").notNullable();
+      tbl.boolean("approved").defaultTo(0);
+      tbl.boolean("donator").defaultTo(0);
     })
     .createTable("services", tbl => {
       tbl.increments();
@@ -72,11 +59,33 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE")
         .notNullable();
     })
+
+    .createTable("training_series_volunteers", tbl => {
+      tbl.increments();
+      tbl
+        .integer("volunteer_id")
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+        .notNullable();
+      tbl
+        .integer("training_series")
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+        .notNullable();
+    })
     .createTable("messages", tbl => {
       tbl.increments();
       tbl.text("subject").notNullable();
       tbl.text("body").notNullable();
       tbl.text("link");
+      tbl
+        .boolean("for_volunteer")
+        .defaultTo(0)
+        .notNullable();
       tbl
         .integer("training_series_id")
         .references("id")
@@ -84,14 +93,6 @@ exports.up = function(knex, Promise) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
-      tbl
-        .boolean("for_manager")
-        .notNullable()
-        .defaultTo(false);
-      tbl
-        .boolean("for_mentor")
-        .notNullable()
-        .defaultTo(false);
       tbl.integer("days_from_start").notNullable();
     })
     .createTable("notifications", tbl => {
@@ -150,10 +151,10 @@ exports.down = function(knex, Promise) {
     .dropTableIfExists("responses")
     .dropTableIfExists("notifications")
     .dropTableIfExists("messages")
+    .dropTableIfExists("training_series_volunteers")
     .dropTableIfExists("training_series")
     .dropTableIfExists("classes")
     .dropTableIfExists("tokens")
     .dropTableIfExists("services")
-    .dropTableIfExists("users")
-    .dropTableIfExists("account_types");
+    .dropTableIfExists("users");
 };
