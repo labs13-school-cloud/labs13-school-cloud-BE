@@ -12,27 +12,21 @@ function find(filters) {
     return db("users AS u")
       .select(
         "u.id AS id",
-        "u.name AS name",
+        "u.first_name AS first_name",
+        "u.last_name AS last_name",
         "u.email AS email",
         "u.stripe AS stripe",
-        "u.notifications_sent",
-        "a.title AS subscription",
-        "a.max_notification_count"
       )
-      .join("account_types AS a", { "u.account_type_id": "a.id" })
       .where(filters);
   }
   return db("users AS u")
     .select(
       "u.id AS id",
-      "u.name AS name",
+      "u.first_name AS first_name",
+      "u.last_name AS last_name",
       "u.email AS email",
       "u.stripe AS stripe",
-      "u.notifications_sent",
-      "a.account_type AS subscription",
-      "a.max_notification_count"
     )
-    .join("account_types AS a", { "u.account_type_id": "a.id" });
 }
 
 function add(user) {
