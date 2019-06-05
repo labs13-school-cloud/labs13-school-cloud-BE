@@ -30,4 +30,25 @@ router.route("/:id")
     });
   });
 
+  router.route("/")
+  .get(async (req, res) => {
+    /**
+     * Get all users associated with an authenticated user
+     *
+     * @function
+     * @param {Object} req - The Express request object
+     * @param {Object} res - The Express response object
+     * @returns {Object} - The Express response object
+     */
+    const users = await debug("users").select("u.id AS id",
+    "u.name AS name",
+    "u.email AS email",
+    "u.stripe AS stripe",
+    "u.notifications_sent",
+    "a.account_type AS subscription",
+    "a.max_notification_count");
+    // Return all users to client
+    return res.status(200).json({ users });
+  })
+
 module.exports = router;
