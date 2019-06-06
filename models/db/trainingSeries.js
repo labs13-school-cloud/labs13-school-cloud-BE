@@ -25,9 +25,16 @@ function find(filters) {
     .where(filters);
 }
 
+/**
+ * Gets all of the training series in the database 
+ *
+ * @function
+ *
+ * @returns {Promise} - A Promise that resolves to an array of training series objects
+ */
 function getAll() {
     return db("training_series")
-        .then(training_series => console.log(training_series))
+        .then(training_series => training_series)
 }
 
 /**
