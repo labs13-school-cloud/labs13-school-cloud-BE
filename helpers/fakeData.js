@@ -19,8 +19,7 @@ function createFakeUsers() {
   const fakeUser = () => ({
     first_name: faker.name.firstName(),
     last_name: faker.name.lastName(),
-    email: faker.internet.email(),
-    role: "volunteer"
+    email: faker.internet.email()
   });
   for (let i = 0; i < userSeeds; i++) {
     newUsers.push(fakeUser());

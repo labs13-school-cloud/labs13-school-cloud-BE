@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
       tbl.text("last_name").notNullable();
       tbl.text("email").notNullable();
       tbl.text("stripe");
-      tbl.text("role").notNullable();
+      tbl.text("role").defaultTo("volunteer");
       tbl.boolean("approved").defaultTo(0);
       tbl.boolean("donator").defaultTo(0);
     })
@@ -70,7 +70,7 @@ exports.up = function(knex, Promise) {
         .onUpdate("CASCADE")
         .notNullable();
       tbl
-        .integer("training_series")
+        .integer("training_series_id")
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
