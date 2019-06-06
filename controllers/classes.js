@@ -12,7 +12,7 @@ router
     .route("/")
     .get(async (req, res) => {
         /**
-         * Get all Classes associated with an authenticated user
+         * Get all Classes 
          * 
          * @function
          * 
@@ -33,4 +33,31 @@ router
         })
     })
 
+
+router
+    .route("/:id")
+    .get(async (req, res) => {
+        /**
+         * Get Classes by ID
+         * 
+         * @function
+         * 
+         * @param {Object} req - Express request object
+         * @param {Object} res - Express response object
+         * 
+         * @returns {Object} - Express response object
+         */
+        // Destructure the Message ID from the request parameters
+        const { id } = req.params;
+
+        // Return a Class to the user
+        Classes.findById(id)
+        .then(classes => {
+            res.status(200).json(classes);
+        })
+        .catch(err => {
+            res.status(500).json({ err: "This class could not be retrieved" })
+        })
+    })
+    
 module.exports = router;
