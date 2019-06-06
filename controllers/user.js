@@ -4,11 +4,18 @@ const router = require("express").Router();
 //Models
 const Users = require("../models/db/users");
 
+//Testing purposes
+router.route("/") 
+  .get(async (req, res) => {
 
-
-
-
-//Get: All donator volunteers /api/users/volunteers/donator
+  try {
+    const users = await Users.find() 
+    // Return all users to client
+    res.status(200).json({ users });
+  } catch(err) {
+    res.status(500).json({message: `Server error`, error:err});
+  } 
+  })
 
 
 
@@ -76,7 +83,7 @@ try {
   .find()
   .where({role: 'volunteer'})
   .andWhere({approved: true}) 
-  // Return all volunteers to client
+  // Return all approved volunteers to client
   res.status(200).json({ users });
 } catch(err) {
   res.status(500).json({message: `Server error`, error:err});
@@ -101,7 +108,7 @@ try {
   .find()
   .where({role: 'volunteer'})
   .andWhere({approved: false}) 
-  // Return all volunteers to client
+  // Return all pending volunteers to client
   res.status(200).json({ users });
 } catch(err) {
   res.status(500).json({message: `Server error`, error:err});
@@ -125,15 +132,15 @@ try {
   .find()
   .where({role: 'volunteer'})
   .andWhere({donator: true}) 
-  // Return all volunteers to client
+  // Return all volunteer/donators to client
   res.status(200).json({ users });
 } catch(err) {
-  res.status(500).json({message: `Server error`, error:err});
+  res.status(500).json({message: `Server error`, error:er});
 } 
 })
 
  //Delete a user of particular id 
-router.route("/api/users/:id")
+router.route("/:id")
   .delete(async (req, res) => {
     /** 
      * Deletes a specific User based on the ID parameter
@@ -160,13 +167,5 @@ router.route("/api/users/:id")
   });
 
 
-
-
-
-
-
-
-
-  
 
 module.exports = router;
