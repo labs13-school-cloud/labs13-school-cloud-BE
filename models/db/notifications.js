@@ -29,25 +29,20 @@ function add(notification) {
  * @returns {Promise} Promise that resolves to an array of found Notification objects
  */
 function find(filters) {
-  return (
-    db("notifications AS n")
-      .select(
-        "n.id",
-        "n.send_date",
-        "n.is_sent",
-        "n.num_attempts",
-        "n.thread",
-        "n.message_id",
-        "n.recipient_id",
-        "u.email AS user"
-      )
-      .leftJoin("users AS u", { "u.id": "n.recipient_id" })
-
-      // .leftJoin("services AS s", { "s.id": "n.service_id" })
-      // .leftJoin("training_series AS ts", { "ts.id": "m.training_series_id" })
-      .where(filters)
-      .orderBy("n.send_date")
-  );
+  return db("notifications AS n")
+    .select(
+      "n.id",
+      "n.send_date",
+      "n.is_sent",
+      "n.num_attempts",
+      "n.thread",
+      "n.message_id",
+      "n.recipient_id",
+      "u.email AS user"
+    )
+    .leftJoin("users AS u", { "u.id": "n.recipient_id" })
+    .where(filters)
+    .orderBy("n.send_date");
 }
 
 /**

@@ -63,15 +63,15 @@ router
 
     // Retrieve the Team Member referenced with the authenticated user by the recipient_id
     const recipientExists = await Users.find({
-      "n.id": id,
+      // "n.id": id, --> removed for testing
       "u.email": email
     });
 
     // If teamMemberExists or recipientExists is falsey, we can assume one or both do not exist
-    if (!teamMemberExists || !recipientExists) {
-      return res
-        .status(404)
-        .json({ message: "One of those Team Members does not exist." });
+    if (!recipientExists) {
+      return res.status(404).json({
+        message: "Notification for this user does not current exist."
+      });
     }
 
     // Add new Notification to the database
@@ -99,8 +99,8 @@ router.route("/:id").get(async (req, res) => {
 
   // Attempt to find the Notification in the database that relates to the authenticated user
   const notification = await Notifications.find({
-    "n.id": id,
-    "u.email": email
+    "n.id": id
+    // "u.email": email --> removed for testing
   }).first();
 
   notification
