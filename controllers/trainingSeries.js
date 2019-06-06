@@ -206,6 +206,17 @@ router.get("/:id/volunteers", async (req, res) => {
 	res.status(200).json({ trainingSeries, volunteers }); // Return an array of volunteers
 });
 
+router.post("/:id/volunteers", async (req, res) => {
+    const { user_id: volunteer_id } = req.body;
+    const { id: training_series } = req.params; 
+    console.log(volunteer_id)
+    console.log(training_series)
+
+    const newVolunteer = await TrainingSeriesVolunteers.add({ volunteer_id, training_series });
+
+    // return res.status(200).json({ newVolunteer })
+})
+
 //! Might not need anymore
 router.get("/:id/assignees", async (req, res) => {
 	/**
