@@ -4,7 +4,8 @@ module.exports = {
   add,
   find,
   update,
-  remove
+  remove,
+  getAll
 };
 
 /**
@@ -19,6 +20,11 @@ function add(message) {
   return db("messages")
     .insert(message, ["*"])
     .then(m => find({ "m.id": m[0].id }).first());
+}
+
+function getAll() {
+    return db("messages")
+        .then(messages => messages)
 }
 
 /**
