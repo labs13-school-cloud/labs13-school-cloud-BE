@@ -50,16 +50,12 @@ function findById(id) {
  * 
  * @returns {Promise} - A Promise that resolves to the newly created Class
  */
-// function add(classes) {
-//     return db("classes")
-//       .insert(classes, ["*"])
-//       .then(c => find({ "c.id": c[0].id }).first());
-//   }
-async function add(student) {
-    const [id] = await db('students').insert(student);
-  
-    return findById(id);
-};
+function add(classes) {
+    return db("classes")
+      .insert(classes, ["*"])
+      .then(c => find({ "c.id": c[0].id }).first());
+}
+
 
 /**
  * Update a Class to the database
