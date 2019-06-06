@@ -29,36 +29,25 @@ function add(notification) {
  * @returns {Promise} Promise that resolves to an array of found Notification objects
  */
 function find(filters) {
-  return db("notifications AS n")
-    .select(
-      "n.id",
-      "n.send_date",
-      "n.is_sent",
-      "n.num_attempts",
-      "n.thread",
-      "n.message_id",
-      "n.recipient_id",
-      "n.team_member_id",
-      "ts.id AS training_series_id",
-      "ts.title AS series",
-      "tm.first_name",
-      "tm.last_name",
-      "tm.email",
-      "tm.phone_number",
-      "tm.slack_uuid",
-      "m.subject",
-      "m.body",
-      "m.link",
-      "u.email AS user",
-      "s.name"
-    )
-    .leftJoin("messages AS m", { "m.id": "n.message_id" })
-    .leftJoin("services AS s", { "s.id": "n.service_id" })
-    .leftJoin("team_members AS tm", { "tm.id": "n.recipient_id" })
-    .leftJoin("users AS u", { "u.id": "tm.user_id" })
-    .leftJoin("training_series AS ts", { "ts.id": "m.training_series_id" })
-    .where(filters)
-    .orderBy("n.send_date");
+  return (
+    db("notifications AS n")
+      .select(
+        "n.id",
+        "n.send_date",
+        "n.is_sent",
+        "n.num_attempts",
+        "n.thread",
+        "n.message_id",
+        "n.recipient_id",
+        "u.email AS user"
+      )
+      .leftJoin("users AS u", { "u.id": "n.recipient_id" })
+
+      // .leftJoin("services AS s", { "s.id": "n.service_id" })
+      // .leftJoin("training_series AS ts", { "ts.id": "m.training_series_id" })
+      .where(filters)
+      .orderBy("n.send_date")
+  );
 }
 
 /**
