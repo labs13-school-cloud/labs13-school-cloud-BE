@@ -14,7 +14,7 @@ const Users = require("../models/db/users");
 
 
 //GET - All users /api/users
-router.route("/api/users") 
+router.route("/") 
   .get(async (req, res) => {
     /**
      * Get all users associated with an authenticated user
@@ -37,7 +37,7 @@ router.route("/api/users")
 
 
   //GET - All volunteers /api/users/volunteers
-  router.route("/api/users/volunteers") 
+  router.route("/volunteers") 
   .get(async (req, res) => {
     /**
      * Get all users with role "volunteers"
@@ -52,7 +52,7 @@ router.route("/api/users")
     const users = await Users
     .find()
     // .select('volunteer.name as Volunteer')
-    .where('role', 'volunteers') 
+    .where({'role': 'volunteers'}) 
     // Return all volunteers to client
     res.status(200).json({ users });
   } catch(err) {
