@@ -3,11 +3,10 @@ const router = require("express").Router();
 
 //Models
 const Users = require("../models/db/users");
-// const TeamMembers = require("../models/teamMember");
-// const Notifications = require("../models/notifications");
 
 
-//GET - All pending volunteers /api/users/volunteers/pending
+
+
 
 //Get: All donator volunteers /api/users/volunteers/donator
 
@@ -51,8 +50,7 @@ router.route("/")
   try {
     const users = await Users
     .find()
-    // .select('volunteer.name as Volunteer')
-    .where({'role': 'volunteers'}) 
+    .where({role: 'volunteer'})
     // Return all volunteers to client
     res.status(200).json({ users });
   } catch(err) {
@@ -62,52 +60,77 @@ router.route("/")
 
 //GET - All approved volunteers /api/users/volunteers/approved
 
-router.route("/api/users/volunteers/approved") 
-  .get(async (req, res) => {
-    /**
-     * Get all users with role "volunteers"
-     *
-     * @function
-     * @param {Object} req - The Express request object
-     * @param {Object} res - The Express response object
-     * @returns {Object} - The Express response object
-     */
+router.route("/volunteers/approved") 
+.get(async (req, res) => {
+  /**
+   * Get all users with role "volunteers" that are approved to mentor
+   *
+   * @function
+   * @param {Object} req - The Express request object
+   * @param {Object} res - The Express response object
+   * @returns {Object} - The Express response object
+   */
 
-  try {
-    const users = await Users
-    .find()
-    // .select('volunteer.name as Volunteer')
-    .where('approved', 'true') 
-    // Return all volunteers to client
-    res.status(200).json({ users });
-  } catch(err) {
-    res.status(500).json({message: `Server error`, error:err});
-  } 
-  })
+try {
+  const users = await Users
+  .find()
+  .where({role: 'volunteer'})
+  .andWhere({approved: true}) 
+  // Return all volunteers to client
+  res.status(200).json({ users });
+} catch(err) {
+  res.status(500).json({message: `Server error`, error:err});
+} 
+})
 
+  //GET - All pending volunteers /api/users/volunteers/pending
 
-  router.route("/api/users") 
-  .get(async (req, res) => {
-    /**
-     * Get all users 
-     *
-     * @function
-     * @param {Object} req - The Express request object
-     * @param {Object} res - The Express response object
-     * @returns {Object} - The Express response object
-     */
+  router.route("/volunteers/pending") 
+.get(async (req, res) => {
+  /**
+   * Get all users with role "volunteers" but not approved
+   *
+   * @function
+   * @param {Object} req - The Express request object
+   * @param {Object} res - The Express response object
+   * @returns {Object} - The Express response object
+   */
 
-  try {
-    const users = await Users.find()
-    .where 
-    // Return all users to client
-    res.status(200).json({ users });
-  } catch(err) {
-    res.status(500).json({message: `Server error`, error:err});
-  } 
-  })
+try {
+  const users = await Users
+  .find()
+  .where({role: 'volunteer'})
+  .andWhere({approved: false}) 
+  // Return all volunteers to client
+  res.status(200).json({ users });
+} catch(err) {
+  res.status(500).json({message: `Server error`, error:err});
+} 
+})
 
   //Get: All donator volunteers /api/users/volunteers/donator
+  router.route("/volunteers/donator") 
+.get(async (req, res) => {
+  /**
+   * Get all users with role "volunteers" and are donators
+   *
+   * @function
+   * @param {Object} req - The Express request object
+   * @param {Object} res - The Express response object
+   * @returns {Object} - The Express response object
+   */
+
+try {
+  const users = await Users
+  .find()
+  .where({role: 'volunteer'})
+  .andWhere({donator: true}) 
+  // Return all volunteers to client
+  res.status(200).json({ users });
+} catch(err) {
+  res.status(500).json({message: `Server error`, error:err});
+} 
+})
 
  //Delete a user of particular id 
 router.route("/api/users/:id")
