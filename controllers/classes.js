@@ -5,10 +5,6 @@ const router = require("express").Router();
 
 const Classes = require("../models/db/classes");
 
-// Data Validation
-
-const { classesSchema } = require("../models/schemas");
-const validation = require("../middleware/dataValidation");
 
 // Routes
 
@@ -25,14 +21,16 @@ router
          * 
          * @returns {Object} - Express response object
          */
-        // Destructure the authenticated User email from res.locals
-        const { email } = res.locals.user;
 
-        // Get all Classes from the database that are associated with the authenticated user
-        const classes = await Classes.find({ "u.email": email });
 
         //Return the Classes found to the user
-        res.status(200).json({ classes })
+        Classes.find()
+        .then(Classes => {
+            res.status(200).json(Classes);
+        })
+        .catch(err => {
+            res.status(500).json({ err: "This class could not be retrieved" })
+        })
     })
 
 module.exports = router;

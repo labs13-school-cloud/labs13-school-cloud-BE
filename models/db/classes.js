@@ -4,37 +4,41 @@ module.exports = {
     find,
     add,
     update,
-    remove
+    remove,
+    findById
 }
 
-// function find() {
-//   return db('classes');
-// };
 
 /**
- * Find a Class 
- * 
- * @function
- * 
- * @param {Object}  filters - A filters object to pass to the SQL WHERE clause
- * @see https://knexjs.org/#Builder-where
- * 
- * @returns {Promise} - A Promise that  resolves to an array of Class objects
- */
-function find(filters) {
-    return db("classes AS c")
-        // .select(
-        //     "c.id",
-        //     "c.class_name AS name",
-        //     "c.grade_level",
-        //     "c.subject",
-        //     "c.number_of_students",
-        //     "c.volunteer_id"
-        // )
-        // .join({ "c.name" })
-        .where(filters)
-        
+//  * Find a Class 
+//  * 
+//  * @function
+//  * 
+//  * @param {Object}  filters - A filters object to pass to the SQL WHERE clause
+//  * @see https://knexjs.org/#Builder-where
+//  * 
+//  * @returns {Promise} - A Promise that  resolves to an array of Class objects
+//  */
+function find() {
+    return db("classes")
 }
+
+/**
+//  * Find a Class by ID
+//  * 
+//  * @function
+//  * 
+//  * @param {Object}  classes - A filters object to pass to the SQL WHERE clause
+//  * @see https://knexjs.org/#Builder-where
+//  * 
+//  * @returns {Promise} - A Promise that resolves to a Class object
+//  */
+function findById(id) {
+    return db('classes')
+      .where({ id })
+      .first();
+};
+  
 
 /**
  * Add a Class to the database
@@ -46,11 +50,16 @@ function find(filters) {
  * 
  * @returns {Promise} - A Promise that resolves to the newly created Class
  */
-function add(classes) {
-    return db('classes AS c')
-    .insert(classes, ["*"])
-    .then(c => find({ "c.id": c[0].id }).first())
-}
+// function add(classes) {
+//     return db("classes")
+//       .insert(classes, ["*"])
+//       .then(c => find({ "c.id": c[0].id }).first());
+//   }
+async function add(student) {
+    const [id] = await db('students').insert(student);
+  
+    return findById(id);
+};
 
 /**
  * Update a Class to the database
