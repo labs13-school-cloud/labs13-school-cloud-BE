@@ -66,7 +66,7 @@ router
     //   "u.email": email
     // });
 
-    // Retrieve the Team Member referenced with the authenticated user by the recipient_id
+    // Retrieve the User referenced with the authenticated user by the recipient_id
     const recipientExists = await Users.find({
       "n.recipient_id": recipient_id,
       "u.email": email
@@ -76,7 +76,10 @@ router
     if (!recipientExists) {
       return res
         .status(404)
-        .json({ message: "One of those Team Members does not exist." });
+        .json({
+          message:
+            "A user with that email address does not have any notifications."
+        });
     }
 
     // Add new Notification to the database
