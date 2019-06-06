@@ -4,7 +4,7 @@ const router = require("express").Router();
 //Models
 const Users = require("../models/db/users");
 
-router.route("/")
+router.route("/api/users") 
   .get(async (req, res) => {
     /**
      * Get all users associated with an authenticated user
@@ -17,12 +17,13 @@ router.route("/")
 
   try {
     const users = await db ("users").select("u.id AS id",
-    "u.name AS name",
-    "u.email AS email",
-    "u.stripe AS stripe",
-    "u.notifications_sent",
-    "a.account_type AS subscription",
-    "a.max_notification_count");
+    "u.name AS name");
+
+    // "u.email AS email",
+    // "u.stripe AS stripe",
+    // "u.notifications_sent",
+    // "a.account_type AS subscription",
+    // "a.max_notification_count");
     // Return all users to client
     res.status(200).json({ users });
   } catch(err) {
