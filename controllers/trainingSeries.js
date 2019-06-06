@@ -6,6 +6,7 @@ const arrayFlat = require("../helpers/arrayFlat");
 const TrainingSeries = require("../models/db/trainingSeries");
 const Messages = require("../models/db/messages");
 const Notifications = require("../models/db/notifications");
+const TrainingSeriesVolunteers = require("../models/db/training_series_volunteers");
 
 // Data validation
 const { trainingSeriesSchema } = require("../models/schemas");
@@ -24,13 +25,13 @@ router
 		// Destructure the authenticated User email off of res.locals
 		// const { email } = res.locals.user;
         // Get all training series from the database that are associated with the authenticated User
-        // TrainingSeries.getAll();
+        const trainingSeries = await TrainingSeries.getAll();
 		// const trainingSeries = await TrainingSeries.find({
 		// 	"u.email": email,
 		// });
 		// Return the found training series to client
-        // res.status(200).json({ trainingSeries });
-        res.send("hello")
+        res.status(200).json({ trainingSeries });
+        // res.send("hello")
 	})
 	.post(validation(trainingSeriesSchema), async (req, res) => {
 		/**
@@ -165,7 +166,8 @@ router.get("/:id/messages", async (req, res) => {
 	}
 
 	//find the messages by ID
-	const messages = await Messages.find({ "ts.id": id });
+    const messages = await Messages.find({ "ts.id": id });
+    console.log(messages);
 
 	//return the training series and its messages to the client
 	return res.status(200).json({ trainingSeries, messages });
@@ -191,7 +193,9 @@ router.get("/:id/volunteers", async (req, res) => {
 		});
 	}
 
-	const volunteers = []; //Replace with model to get volunteers
+    // *console.log(trainingSeries);
+    const volunteers = await TrainingSeriesVolunteers.find({ "tsv.training_series": id });
+    console.log("volunteers", volunteers);
 
 	if (!volunteers.length) {
 		return res.status(404).json({
@@ -199,9 +203,10 @@ router.get("/:id/volunteers", async (req, res) => {
 		});
 	}
 
-	res.status(200).json({ volunteers }); // Return an array of volunteers
+	res.status(200).json({ trainingSeries, volunteers }); // Return an array of volunteers
 });
 
+//! Might not need anymore
 router.get("/:id/assignees", async (req, res) => {
 	/**
 	 * get the team members for the specific training series
