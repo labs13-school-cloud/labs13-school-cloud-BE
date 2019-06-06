@@ -35,10 +35,10 @@ function find(filters) {
       "n.send_date",
       "n.is_sent",
       "n.num_attempts",
-      "n.thread",
-      "n.message_id",
+      "u.email AS user",
       "n.recipient_id",
-      "u.email AS user"
+      "n.message_id",
+      "n.thread"
     )
     .leftJoin("users AS u", { "u.id": "n.recipient_id" })
     .where(filters)
