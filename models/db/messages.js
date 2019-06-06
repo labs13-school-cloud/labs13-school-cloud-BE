@@ -35,9 +35,7 @@ function find(filters) {
       "m.subject",
       "m.body",
       "m.link",
-      "m.for_manager",
-      "m.for_mentor",
-      "m.for_team_member",
+      "m.for_volunteer",
       "ts.title AS series",
       "m.training_series_id",
       "m.days_from_start"
