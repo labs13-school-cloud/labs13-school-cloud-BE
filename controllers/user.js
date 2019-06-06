@@ -16,24 +16,35 @@ router.get("/api/users", async (req, res) => {
   }
 });
 
+//GET - All volunteers /api/users/volunteers
+
+
+//GET - All approved volunteers /api/users/volunteers/approved
+
+
+//GET - All pending volunteers /api/users/volunteers/pending
+
+//Get: All donator volunteers /api/users/volunteers/donator
+
+
 
 // DELETE a user account
-router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
+// router.delete("/:id", async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const user = await Users.findById(id);
+//   try {
+//     const user = await Users.findById(id);
 
-    if (!user) {
-      res.status(404).json({ message: "The specified user does not exist." });
-    } else {
-      await Users.deleteUser(id);
-      res.status(200).json({ message: "User account removed successfully." });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "A network error occurred." });
-  }
-});
+//     if (!user) {
+//       res.status(404).json({ message: "The specified user does not exist." });
+//     } else {
+//       await Users.deleteUser(id);
+//       res.status(200).json({ message: "User account removed successfully." });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: "A network error occurred." });
+//   }
+// });
 // router.route("/api/users") 
 //   .get(async (req, res) => {
 //     /**
