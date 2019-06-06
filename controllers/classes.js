@@ -87,4 +87,37 @@ router
         return res.status(201).json({ newClass });
     })
 
+router
+    .route("/:id")
+    .put(async (req, res) => {
+        /**
+         * Update the specified training series in the database
+         * 
+         *
+         * @function
+         * @param {Object} req - The Express request object
+         * @param {Object} req.body - The request body, which represents the changes we need to make to a specific classs
+         * @param {Object} res - The Express response object
+         * @returns {Object} - The Express response object
+         */
+        // Destructure the ID off the request parameters
+        const { id } = req.params;
+
+        // Update the specific class in the database
+        const updatedClass = await Classes.update(
+            { "c.id": id },
+            req.body
+        );
+        
+        // If the class they're looking for isn't found, return a 404 and message.
+        if (!updatedClass) {
+            return res.status(404).json({
+                message: "Sorry, we couldn't find that class!"
+            });
+        };
+
+        // Return the updated training series to the client
+        return res.status(200).json({ message: "This class has been successfully updated!" });
+    })
+
 module.exports = router;
