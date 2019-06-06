@@ -61,16 +61,22 @@ router
       return res.status(404).json({ message: "That message does not exist." });
     }
 
-    // Retrieve the Team Member referenced with the authenticated user by the recipient_id
+    // Retrieve the Team Member referenced with the referenced user by the team_member_id
+    // const teamMemberExists = await TeamMembers.find({
+    //   "u.email": email
+    // });
+
+    // Retrieve the User referenced with the authenticated user by the recipient_id
     const recipientExists = await Users.find({
-      "n.id": id,
+      "n.recipient_id": recipient_id,
       "u.email": email
     });
 
-    // If teamMemberExists or recipientExists is falsey, we can assume one or both do not exist
+    // If recipientExists is falsey, we can assume one or both do not exist
     if (!recipientExists) {
       return res.status(404).json({
-        message: "Notification for this user does not current exist."
+        message:
+          "A user with that email address does not have any notifications."
       });
     }
 
@@ -99,8 +105,8 @@ router.route("/:id").get(async (req, res) => {
 
   // Attempt to find the Notification in the database that relates to the authenticated user
   const notification = await Notifications.find({
-    "n.id": id
-    // "u.email": email --> removed for testing
+    "n.id": id,
+    "u.email": email
   }).first();
 
   notification
@@ -110,8 +116,37 @@ router.route("/:id").get(async (req, res) => {
       res.status(404).json({ message: "That notification does not exist." });
 });
 
+router.route("/:id").put(async (req, res) => {
+  /**
+   * Get a specific Notification by its ID
+   *
+   * @function
+   * @param {Object} req - The Express request object
+   * @param {Object} res - The Express response object
+   * @returns {Object} - The Express response object
+   */
+
+  // Destructure the Notification ID from the request parameters
+  const { id } = req.params;
+
+  // Attempt to update the notifications that matches that ID
+  const updatedNotification = await Notifications.update(
+    { "n.id": id },
+    req.body
+  ).first();
+
+  updatedNotification
+    ? // Return the specified Notification to the client
+      res.status(200).json({ updatedNotification })
+    : // If notification is falsey, we can assume either the Notification doesn't exist in the database or the user doesn't have access
+      res
+        .status(404)
+        .json({
+          message: "That notification does not exist, so could not be updated."
+        });
+});
+
 router.route("/:id/responses").get(async (req, res) => {
-  //cannot test yet
   /**
    * Get all Responses for a specific Notification by the Notification ID
    *
