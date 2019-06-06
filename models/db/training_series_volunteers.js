@@ -17,8 +17,7 @@ function find(filters) {
 		.select(
 			"tsv.id",
 			"tsv.volunteer_id",
-			// ! Remember to updated to id once added
-			"tsv.training_series",
+			"tsv.training_series_id",
 			"u.first_name",
 			"u.last_name",
 			"u.email",
@@ -26,7 +25,7 @@ function find(filters) {
 			"u.approved",
 			"ts.title AS series",
 		)
-		.leftJoin("training_series AS ts", { "ts.id": "tsv.training_series" })
+		.leftJoin("training_series AS ts", { "ts.id": "tsv.training_series_id" })
 		.leftJoin("users AS u", { "u.id": "tsv.volunteer_id" })
 		.where(filters);
 }

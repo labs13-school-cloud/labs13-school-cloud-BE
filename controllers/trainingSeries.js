@@ -194,7 +194,7 @@ router.get("/:id/volunteers", async (req, res) => {
 	}
 
     // *console.log(trainingSeries);
-    const volunteers = await TrainingSeriesVolunteers.find({ "tsv.training_series": id });
+    const volunteers = await TrainingSeriesVolunteers.find({ "tsv.training_series_id": id });
     console.log("volunteers", volunteers);
 
 	if (!volunteers.length) {
@@ -209,11 +209,8 @@ router.get("/:id/volunteers", async (req, res) => {
 router.post("/:id/volunteers", async (req, res) => {
     const { user_id: volunteer_id } = req.body;
     const { id: training_series } = req.params; 
-    console.log(volunteer_id)
-    console.log(training_series)
 
     const newVolunteer = await TrainingSeriesVolunteers.add({ volunteer_id, training_series });
-
     // return res.status(200).json({ newVolunteer })
 })
 
