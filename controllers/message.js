@@ -47,8 +47,8 @@ router
 
     // Retrieve the Training Series referenced with the authenticated user by the training_series_id
     const trainingSeriesExists = await TrainingSeries.find({
-      "ts.id": req.body.training_series_id,
-      "u.email": email
+      "ts.id": req.body.training_series_id
+      // "u.email": email --> removing for testing
     }).first();
 
     // If trainingSeriesExists is falsey, we can assume the Training Series does not exist
