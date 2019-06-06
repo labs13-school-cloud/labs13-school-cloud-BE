@@ -93,7 +93,6 @@ exports.up = function(knex, Promise) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
-      tbl.integer("days_from_start").notNullable();
     })
     .createTable("notifications", tbl => {
       tbl.increments();

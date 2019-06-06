@@ -54,8 +54,7 @@ function createFakeMessages() {
     training_series_id: faker.random.number({
       min: 1,
       max: seriesSeeds
-    }),
-    days_from_start: faker.random.number({ min: 1, max: 100 })
+    })
   });
   for (let i = 0; i < messageSeeds; i++) {
     newMessages.push(fakeMessage());
