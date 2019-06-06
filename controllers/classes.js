@@ -116,8 +116,37 @@ router
             });
         };
 
-        // Return the updated training series to the client
+        // Return a success message
         return res.status(200).json({ message: "This class has been successfully updated!" });
+    })
+
+router
+    .route("/:id")
+    .delete(async (req, res) => {
+        /**
+         * delete a specific class
+         *
+         * @function
+         * @param {Object} req - The Express request object
+         * @param {Object} res - The Express response object
+         * @returns {Object} - The Express response object
+         */
+        // Destructure the ID off of the request object
+        const { id } = req.params;
+        
+        // Attempt to delete the specified Team Member from the database
+        const deleted = await Classes.remove({ id });
+
+        // If no class with the specified ID is found
+        if (!deleted) {
+            return res.status(404).json({
+                error: "This class could not be found."
+            });
+        }
+        // Respond to the client with a success message
+        return res.status(200).json({
+            message: "This class has been deleted."
+        });
     })
 
 module.exports = router;
