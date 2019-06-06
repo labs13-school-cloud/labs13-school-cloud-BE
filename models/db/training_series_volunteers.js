@@ -2,7 +2,8 @@ const db = require("../index");
 
 module.exports = {
 	find,
-	add,
+    add,
+    remove
 };
 
 /**
@@ -23,15 +24,33 @@ function find(filters) {
 			"u.email",
 			"u.role",
 			"u.approved",
-			"ts.title AS series",
 		)
 		.leftJoin("training_series AS ts", { "ts.id": "tsv.training_series_id" })
 		.leftJoin("users AS u", { "u.id": "tsv.volunteer_id" })
-		.where(filters);
+		.where(filters)
+		.orderBy("id");
 }
 
-function add(volunteer) {
-    return db("training_series_volunteers")
-        .insert(volunteer, ["*"])
-        .then(v => console.log(v));
+/**
+ * Adds a volunteers to a training series
+ *
+ * @function
+ * @param  {Object} relation - A relation object that contains the training series id and volunteer id (user_id to add)
+ * @returns {Promise} Promise that resolves to the new relation;
+ */
+function add(relation) {
+	return db("training_series_volunteers")
+		.insert(relation, ["*"])
+		.then(r =>
+			find({
+				"tsv.volunteer_id": r[0].volunteer_id,
+				"tsv.training_series_id": r[0].training_series_id,
+			}).first(),
+		);
+}
+
+function remove(filter) {
+	return db("training_series_volunteers AS tsv")
+		.where(filter)
+		.delete();
 }

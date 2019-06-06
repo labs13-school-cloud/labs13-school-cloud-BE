@@ -7,6 +7,7 @@ const TrainingSeries = require("../models/db/trainingSeries");
 const Messages = require("../models/db/messages");
 const Notifications = require("../models/db/notifications");
 const TrainingSeriesVolunteers = require("../models/db/training_series_volunteers");
+const Users = require("../models/db/users");
 
 // Data validation
 const { trainingSeriesSchema } = require("../models/schemas");
@@ -24,14 +25,14 @@ router
 		 */
 		// Destructure the authenticated User email off of res.locals
 		// const { email } = res.locals.user;
-        // Get all training series from the database that are associated with the authenticated User
-        const trainingSeries = await TrainingSeries.getAll();
+		// Get all training series from the database that are associated with the authenticated User
+		const trainingSeries = await TrainingSeries.getAll();
 		// const trainingSeries = await TrainingSeries.find({
 		// 	"u.email": email,
 		// });
 		// Return the found training series to client
-        res.status(200).json({ trainingSeries });
-        // res.send("hello")
+		res.status(200).json({ trainingSeries });
+		// res.send("hello")
 	})
 	.post(validation(trainingSeriesSchema), async (req, res) => {
 		/**
@@ -166,8 +167,7 @@ router.get("/:id/messages", async (req, res) => {
 	}
 
 	//find the messages by ID
-    const messages = await Messages.find({ "ts.id": id });
-    console.log(messages);
+	const messages = await Messages.find({ "ts.id": id });
 
 	//return the training series and its messages to the client
 	return res.status(200).json({ trainingSeries, messages });
@@ -193,9 +193,10 @@ router.get("/:id/volunteers", async (req, res) => {
 		});
 	}
 
-    // *console.log(trainingSeries);
-    const volunteers = await TrainingSeriesVolunteers.find({ "tsv.training_series_id": id });
-    console.log("volunteers", volunteers);
+	// *console.log(trainingSeries);
+	const volunteers = await TrainingSeriesVolunteers.find({
+		"tsv.training_series_id": id,
+	});
 
 	if (!volunteers.length) {
 		return res.status(404).json({
@@ -207,12 +208,52 @@ router.get("/:id/volunteers", async (req, res) => {
 });
 
 router.post("/:id/volunteers", async (req, res) => {
-    const { user_id: volunteer_id } = req.body;
-    const { id: training_series } = req.params; 
+	const { user_id: volunteer_id } = req.body;
+	const { id: training_series_id } = req.params;
 
-    const newVolunteer = await TrainingSeriesVolunteers.add({ volunteer_id, training_series });
-    // return res.status(200).json({ newVolunteer })
-})
+	const relation = await TrainingSeriesVolunteers.find({
+		"tsv.volunteer_id": volunteer_id,
+		"tsv.training_series_id": training_series_id,
+	}).first();
+
+	if (relation) {
+		return res.status(400).json({
+			message: "This volunteer is already a part of this training series",
+		});
+	}
+
+	const newRelation = await TrainingSeriesVolunteers.add({
+		volunteer_id,
+		training_series_id,
+	});
+
+	return res.status(200).json({ newRelation });
+});
+
+router.delete("/:id/volunteers/:user_id", async (req, res) => {
+	const { id: training_series_id, user_id: volunteer_id } = req.params;
+
+	const volunteer = await TrainingSeriesVolunteers.find({
+		"tsv.volunteer_id": volunteer_id,
+		"tsv.training_series_id": training_series_id,
+	}).first();
+
+	if (!volunteer) {
+		return res.status(404).json({
+			message: "Volunteer can not be found in this training series",
+		});
+	}
+
+	const deleted = await TrainingSeriesVolunteers.remove({
+		"tsv.volunteer_id": volunteer_id,
+		"tsv.training_series_id": training_series_id,
+	});
+
+	return res.status(200).json({
+		deleted,
+		message: "The volunteer has been removed from the training series.",
+	});
+});
 
 //! Might not need anymore
 router.get("/:id/assignees", async (req, res) => {
