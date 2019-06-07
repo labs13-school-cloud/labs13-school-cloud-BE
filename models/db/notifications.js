@@ -68,8 +68,7 @@ function update(filter, changes) {
  */
 function remove(filters) {
   return db("notifications AS n")
-    .leftJoin("team_members AS tm", { "tm.id": "n.team_member_id" })
-    .leftJoin("users AS u", { "u.id": "tm.user_id" })
+    .leftJoin("users AS u", { "u.id": "n.recipient_id" })
     .where(filters)
     .del();
 }

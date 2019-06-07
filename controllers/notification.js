@@ -139,11 +139,9 @@ router.route("/:id").put(async (req, res) => {
     ? // Return the specified Notification to the client
       res.status(200).json({ updatedNotification })
     : // If notification is falsey, we can assume either the Notification doesn't exist in the database or the user doesn't have access
-      res
-        .status(404)
-        .json({
-          message: "That notification does not exist, so could not be updated."
-        });
+      res.status(404).json({
+        message: "That notification does not exist, so could not be updated."
+      });
 });
 
 router.route("/:id/responses").get(async (req, res) => {

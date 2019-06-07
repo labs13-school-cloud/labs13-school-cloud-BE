@@ -37,8 +37,7 @@ function find(filters) {
       "m.link",
       "m.for_volunteer",
       "ts.title AS series",
-      "m.training_series_id",
-      "m.days_from_start"
+      "m.training_series_id"
     )
     .leftJoin("training_series AS ts", { "ts.id": "m.training_series_id" })
     .leftJoin("users AS u", { "u.id": "ts.user_id" })

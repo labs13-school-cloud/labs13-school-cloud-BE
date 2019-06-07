@@ -6,17 +6,18 @@ const userSchema = {
   first_name: Joi.string()
     .max(255)
     .required(),
-    last_name: Joi.string()
+  last_name: Joi.string()
     .max(255)
     .required(),
   email: Joi.string()
     .email({ minDomainSegments: 2 })
     .required(),
   stripe: Joi.string(),
-  role: Joi.string().max(255).required(),
+  role: Joi.string()
+    .max(255)
+    .required(),
   approved: Joi.boolean(),
   donator: Joi.boolean()
-  
 };
 
 // class_name, grade_level, subject, number_of_students, volunteer_id
@@ -27,12 +28,11 @@ const classesSchema = {
     .integer()
     .required(),
   subject: Joi.string().required(),
-  number_of_students: Joi.number()
-    .integer(),
+  number_of_students: Joi.number().integer(),
   volunteer_id: Joi.number()
     .integer()
     .required()
-}
+};
 
 const trainingSeriesSchema = {
   title: Joi.string().required(),
@@ -54,9 +54,7 @@ const messageSchema = {
     .integer()
     .min(1)
     .required(),
-  for_manager: Joi.boolean(),
-  for_mentor: Joi.boolean(),
-  for_team_member: Joi.boolean(),
+  for_volunteer: Joi.boolean().required(),
   days_from_start: Joi.number()
     .integer()
     .min(1)
@@ -102,7 +100,7 @@ const notificationSchema = {
   num_attempts: Joi.number()
     .integer()
     .min(0),
-  thread: Joi.string(),
+  thread: Joi.string()
 };
 
 const responseSchema = {
