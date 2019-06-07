@@ -80,10 +80,10 @@ router
          * @returns {Object} - Express response object
          */
         // Deconstructure the req body.
-        const { class_name, grade_level, subject, number_of_students, volunteer_id } = req.body;
+        const { class_name, grade_level, subject, number_of_students } = req.body;
 
         // Add the new class  to the database
-        const newClass = await Classes.add({ class_name, grade_level, subject, number_of_students, volunteer_id });
+        const newClass = await Classes.add({ class_name, grade_level, subject, number_of_students });
 
         // Return the newly created classs to the user
         return res.status(201).json({ newClass });
