@@ -4,18 +4,6 @@ const router = require("express").Router();
 //Models
 const Users = require("../models/db/users");
 
-//Testing purposes
-router.route("/") 
-  .get(async (req, res) => {
-
-  try {
-    const users = await Users.find() 
-    // Return all users to client
-    res.status(200).json({ users });
-  } catch(err) {
-    res.status(500).json({message: `Server error`, error:err});
-  } 
-  })
 
 
 
@@ -57,7 +45,8 @@ router.route("/")
   try {
     const users = await Users
     .find()
-    .where({role: 'volunteer'})
+    .where({user_id: volunteer_id})
+    .andWhere({role: 'volunteer'})
     // Return all volunteers to client
     res.status(200).json({ users });
   } catch(err) {
