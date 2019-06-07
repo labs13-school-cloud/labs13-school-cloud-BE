@@ -1,7 +1,9 @@
 const db = require("../index")
 
 module.exports = {
-    find
+    find,
+    add,
+    remove
 };
 
 /**
@@ -27,4 +29,40 @@ function find(filters) {
         .leftJoin("users AS u", { "u.id": "cv.volunteer_id" })
         .where(filters)
         .orderBy("id")
+}
+
+/**
+ * Add a volunteer to a class
+ * 
+ * @function
+ * 
+ * @param {Object} relation - A  relation object that contains the classes_id and the volunteer id
+ * 
+ * @returns {Promise} - A Promise that resolves to the new relation
+ */
+function add(relation){
+    return db("classes_volunteers")
+        .insert(relation, ["*"])
+        .then(r => 
+            find({
+                "cv.volunteer_id":  r[0].volunteer_id,
+                "cv.class_id": r[0].classes_id,
+                "u.role": "volunteer"
+            }).first(),
+        )
+}
+
+/**
+ * Removes a volunteer from a class
+ * 
+ * @function
+ *
+ * @param {Object} 
+ * 
+ * @returns  
+ */
+function remove(filter) {
+    return db("classes_volunteers")
+        .where(filter)
+        .del();
 }
