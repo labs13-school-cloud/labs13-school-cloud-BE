@@ -216,7 +216,7 @@ router
 router
     .route("/:id/volunteers/:user_id")
     .delete( async (req, res) => {
-        const { id: classes_id, user_id: volunteer_id }
+        const { id: classes_id, user_id: volunteer_id } = req.params;
         
         const volunteer = await ClassesVolunteers.find({
             "cv.volunteer_id": volunteer_id,
