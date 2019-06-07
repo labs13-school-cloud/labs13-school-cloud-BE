@@ -14,7 +14,7 @@ router
   .route("/")
   .get(async (req, res) => {
     /**
-     *Get all Messages associated with an authenticated user
+     *Get all Messages 
      *
      * @function
      * @param {Object} req - The Express request object
@@ -22,11 +22,8 @@ router
      * @returns {Object} - The Express response object
      */
 
-    // Destructure the authenticated User email from res.locals
-    const { email } = res.locals.user;
-
-    // Get all Messages from the database that are associated with the authenticated user
-    const messages = await Messages.find({ "u.email": email });
+    // Get all Messages from the database 
+    const messages = await Messages.getAll();
 
     // Return the found Messages to the client
     res.status(200).json({ messages });
