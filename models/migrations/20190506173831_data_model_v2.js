@@ -40,10 +40,20 @@ exports.up = function(knex, Promise) {
       tbl.text("grade_level").notNullable();
       tbl.text("subject");
       tbl.integer("number_of_students");
+    })
+    .createTable("classes_volunteers", tbl => {
+      tbl.increments();
       tbl
         .integer("volunteer_id")
         .references("id")
         .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE")
+        .notNullable();
+      tbl
+        .integer("class_id")
+        .references("id")
+        .inTable("classes")
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
         .notNullable();
@@ -153,6 +163,7 @@ exports.down = function(knex, Promise) {
     .dropTableIfExists("messages")
     .dropTableIfExists("training_series_volunteers")
     .dropTableIfExists("training_series")
+    .dropTableIfExists("classes_volunteers")
     .dropTableIfExists("classes")
     .dropTableIfExists("tokens")
     .dropTableIfExists("services")

@@ -23,6 +23,7 @@ const stripeRouter = require("./controllers/stripe");
 const slackRouter = require("./controllers/slack");
 const notificationsRouter = require("./controllers/notification");
 const responsesRouter = require("./controllers/responses");
+const classesRouter = require("./controllers/classes")
 
 //API Endpoints
 server.use("/api/auth", authRouter);
@@ -34,6 +35,7 @@ server.use("/api/stripe", authentication, stripeRouter);
 server.use("/api/slack", authentication, slackRouter);
 server.use("/api/notifications", authentication, notificationsRouter);
 server.use("/api/responses", responsesRouter);
+server.use("/api/classes", authentication, classesRouter);
 
 //Default Sanity Check Endpoint
 server.get("/", (req, res) => {
