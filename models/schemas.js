@@ -39,7 +39,7 @@ const trainingSeriesSchema = {
   user_id: Joi.number()
     .integer()
     .min(1)
-    .required()
+    .required() //! This makes it required when doing a put request maybe remove
 };
 
 // id, subject, body, link, training_series_id, for_volunteer, days_from_start

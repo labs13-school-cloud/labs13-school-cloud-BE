@@ -16,6 +16,9 @@ function find(filters) {
         "u.last_name AS last_name",
         "u.email AS email",
         "u.stripe AS stripe",
+        "u.role AS role",
+        "u.approved AS approved",
+        "u.donator AS donator",
       )
       .where(filters);
   }
