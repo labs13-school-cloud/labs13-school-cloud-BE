@@ -3,22 +3,20 @@ const Joi = require("@hapi/joi");
 // need: first_name, last_name, email, roles, stripe, approved, donator
 
 const userSchema = {
-  name: Joi.string()
+  first_name: Joi.string()
+    .max(255)
+    .required(),
+    last_name: Joi.string()
     .max(255)
     .required(),
   email: Joi.string()
     .email({ minDomainSegments: 2 })
     .required(),
   stripe: Joi.string(),
-  notifications_sent: Joi.number()
-    .integer()
-    .min(0)
-    .required(),
-  account_type_id: Joi.number()
-    .integer()
-    .min(1)
-    .max(3)
-    .required()
+  role: Joi.string().max(255).required(),
+  approved: Joi.boolean(),
+  donator: Joi.boolean()
+  
 };
 
 // class_name, grade_level, subject, number_of_students, volunteer_id
