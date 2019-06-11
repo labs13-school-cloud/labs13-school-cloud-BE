@@ -28,19 +28,37 @@ const classesSchema = {
     .integer()
     .required(),
   subject: Joi.string().required(),
+  teacher_name: Joi.string().required(),
   number_of_students: Joi.number().integer(),
+};
+
+const classesVolunteersSchema = {
   volunteer_id: Joi.number()
+    .integer().
+    required(),
+  class_id: Joi.number()
     .integer()
     .required()
-};
+}
 
 const trainingSeriesSchema = {
   title: Joi.string().required(),
+  subject: Joi.string().required(),
   user_id: Joi.number()
     .integer()
     .min(1)
     .required() //! This makes it required when doing a put request maybe remove
 };
+
+const trainingSeriesVolunteersSchema = {
+  finished: Joi.boolean(),
+  volunteer_id: Joi.number()
+    .integer()
+    .required(),
+  training_series_id: Joi.number()
+    .integer()
+    .required(),
+}
 
 // id, subject, body, link, training_series_id, for_volunteer, days_from_start
 
@@ -115,7 +133,9 @@ const responseSchema = {
 module.exports = {
   userSchema,
   classesSchema,
+  classesVolunteersSchema,
   trainingSeriesSchema,
+  trainingSeriesVolunteersSchema,
   messageSchema,
   tokenSchema,
   notificationSchema,
