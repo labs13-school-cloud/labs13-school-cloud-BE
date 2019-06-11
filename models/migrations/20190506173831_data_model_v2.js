@@ -39,6 +39,7 @@ exports.up = function(knex, Promise) {
       tbl.text("class_name").notNullable();
       tbl.text("grade_level").notNullable();
       tbl.text("subject");
+      tbl.text("teacher_name");
       tbl.integer("number_of_students");
     })
     .createTable("classes_volunteers", tbl => {
@@ -61,6 +62,7 @@ exports.up = function(knex, Promise) {
     .createTable("training_series", tbl => {
       tbl.increments();
       tbl.text("title").notNullable();
+      tbl.text("subject");
       tbl
         .integer("user_id")
         .references("id")
@@ -72,6 +74,8 @@ exports.up = function(knex, Promise) {
 
     .createTable("training_series_volunteers", tbl => {
       tbl.increments();
+      tbl
+        .boolean("finished")
       tbl
         .integer("volunteer_id")
         .references("id")
