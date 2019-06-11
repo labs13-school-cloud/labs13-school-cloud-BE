@@ -29,20 +29,32 @@ function add(message) {
  * @returns {Promise} Promise that resolves to an array of found Message objects
  */
 function find(filters) {
-  return db("messages AS m")
-    .select(
-      "m.id",
-      "m.subject",
-      "m.body",
-      "m.link",
-      "m.for_volunteer",
-      "ts.title AS series",
-      "m.training_series_id"
-    )
-    .leftJoin("training_series AS ts", { "ts.id": "m.training_series_id" })
-    .leftJoin("users AS u", { "u.id": "ts.user_id" })
-    .where(filters)
-    .orderBy("series");
+  if (filters) {
+    return db("messages AS m")
+      .select(
+        "m.id",
+        "m.subject",
+        "m.body",
+        "m.link",
+        "m.for_volunteer",
+        "ts.title AS series",
+        "m.training_series_id"
+      )
+      .leftJoin("training_series AS ts", { "ts.id": "m.training_series_id" })
+      .leftJoin("users AS u", { "u.id": "ts.user_id" })
+      .where(filters)
+      .orderBy("series");
+  }
+
+  db("messages AS m").select(
+    "m.id",
+    "m.subject",
+    "m.body",
+    "m.link",
+    "m.for_volunteer",
+    "ts.title AS series",
+    "m.training_series_id"
+  );
 }
 
 /**

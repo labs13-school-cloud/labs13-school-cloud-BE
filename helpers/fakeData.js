@@ -14,7 +14,8 @@ module.exports = {
   createFakeTrainingSeries,
   createFakeMessages,
   createFakeClasses,
-  addVolunteersToSeries
+  addVolunteersToSeries,
+  createFakeNotifications
 };
 
 function addVolunteersToSeries() {
@@ -70,7 +71,8 @@ function createFakeMessages() {
     training_series_id: faker.random.number({
       min: 1,
       max: seriesSeeds
-    })
+    }),
+    for_volunteer: faker.random.boolean()
   });
   for (let i = 0; i < messageSeeds; i++) {
     newMessages.push(fakeMessage());

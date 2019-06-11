@@ -16,7 +16,7 @@ module.exports = {
  * @returns {Promise} Promise that resolves to the new Notification object
  */
 function add(notification) {
-  return db("notifications")
+  return db("notifications As n")
     .insert(notification, ["*"])
     .then(n => find({ "n.id": n[0].id }).first());
 }
