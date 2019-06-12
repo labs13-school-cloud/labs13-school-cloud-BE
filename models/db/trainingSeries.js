@@ -40,9 +40,17 @@ function getAll() {
       "t.title",
       "t.user_id",
       "u.first_name",
-      "u.last_name"
+      "u.last_name",
+      "tsv.finished",
+      "tsv.training_series_id",
+      "m.link"
     )
     .leftJoin("users AS u", { "u.id": "t.user_id" })
+    .leftJoin("training_series_volunteers AS tsv", {
+      "tsv.training_series_id": "t.id"
+    })
+    .leftJoin("messages AS m", { "m.training_series_id": "t.user_id" })
+
     .then(training_series => training_series);
 }
 
