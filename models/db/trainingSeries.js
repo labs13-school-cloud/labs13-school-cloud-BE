@@ -26,15 +26,24 @@ function find(filters) {
 }
 
 /**
- * Gets all of the training series in the database 
+ * Gets all of the training series in the database
  *
  * @function
  *
  * @returns {Promise} - A Promise that resolves to an array of training series objects
  */
 function getAll() {
-    return db("training_series")
-        .then(training_series => training_series)
+  return db("training_series AS t")
+    .select(
+      "t.id",
+      "t.subject",
+      "t.title",
+      "t.user_id",
+      "u.first_name",
+      "u.last_name"
+    )
+    .leftJoin("users AS u", { "u.id": "t.user_id" })
+    .then(training_series => training_series);
 }
 
 /**
