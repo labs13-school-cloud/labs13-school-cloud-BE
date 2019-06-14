@@ -12,8 +12,7 @@ function find(filters) {
     return db("users AS u")
       .select(
         "u.id AS id",
-        "u.first_name AS first_name",
-        "u.last_name AS last_name",
+        "u.name AS name",
         "u.email AS email",
         "u.stripe AS stripe",
         "u.role AS role",
@@ -25,7 +24,7 @@ function find(filters) {
   return db("users AS u")
     .select(
       "u.id AS id",
-      "u.first_name AS first_name",
+      "u.name AS name",
       "u.last_name AS last_name",
       "u.email AS email",
       "u.stripe AS stripe",

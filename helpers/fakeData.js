@@ -32,8 +32,7 @@ function addVolunteersToSeries() {
 function createFakeUsers() {
   const newUsers = [];
   const fakeUser = () => ({
-    first_name: faker.name.firstName(),
-    last_name: faker.name.lastName(),
+    name: faker.name.findName(),
     email: faker.internet.email(),
     approved: faker.random.boolean(),
     donator: faker.random.boolean()
