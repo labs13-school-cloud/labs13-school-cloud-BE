@@ -18,10 +18,10 @@ router.post("/", async (req, res) => {
 	 */
 
 	// Destructure the Email and Name properties off of the request body
-    const { email, given_name: first_name, family_name: last_name } = req.body;
-    
+    const { email, name } = req.body;
+
 	// Create a userInfo object from the request body
-    const userInfo = { email, first_name, last_name };
+    const userInfo = { email, name };
 
 	// If email is falsey, we can assume that the client/Auth0 did not provide an email
 	if (!email) {
@@ -45,13 +45,14 @@ router.post("/", async (req, res) => {
 				// a 404 and a message to the client
 				res.status(404).json({ message: "Training series not found" });
 			}
-		} else if (!user && !first_name && !last_name) {
+		} else if (!user && !name) {
 			// If both user and name don't exist, respond to the client with a message
 			res.status(400).json({
 				message: "Please include a name to create an account.",
 			});
 		} else {
             // If user is not found, create a new User
+            // Default users with a role of volunteer
             userInfo.role = "volunteer"
 			const newUser = await Users.add(userInfo);
 
