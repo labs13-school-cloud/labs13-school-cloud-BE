@@ -74,8 +74,7 @@ exports.up = function(knex, Promise) {
 
     .createTable("training_series_volunteers", tbl => {
       tbl.increments();
-      tbl
-        .boolean("finished")
+      tbl.boolean("finished").notNullable();
       tbl
         .integer("volunteer_id")
         .references("id")
