@@ -2,8 +2,7 @@ exports.up = function(knex, Promise) {
   return knex.schema
     .createTable("users", tbl => {
       tbl.increments();
-      tbl.text("first_name").notNullable();
-      tbl.text("last_name").notNullable();
+      tbl.text("name").notNullable();
       tbl.text("email").notNullable();
       tbl.text("stripe");
       tbl.text("role").defaultTo("volunteer");
