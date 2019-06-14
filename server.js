@@ -15,7 +15,6 @@ const errorHandler = require("./middleware/errorHandling");
 
 //Routes
 const usersRouter = require("./controllers/user");
-const teamsRouter = require("./controllers/teamMember");
 const authRouter = require("./controllers/auth");
 const trainingsRouter = require("./controllers/trainingSeries");
 const messageRouter = require("./controllers/message");
@@ -23,12 +22,11 @@ const stripeRouter = require("./controllers/stripe");
 const slackRouter = require("./controllers/slack");
 const notificationsRouter = require("./controllers/notification");
 const responsesRouter = require("./controllers/responses");
-const classesRouter = require("./controllers/classes")
+const classesRouter = require("./controllers/classes");
 
 //API Endpoints
 server.use("/api/auth", authRouter);
 server.use("/api/users", authentication, usersRouter);
-server.use("/api/team-members", authentication, teamsRouter);
 server.use("/api/training-series", authentication, trainingsRouter);
 server.use("/api/messages", authentication, messageRouter);
 server.use("/api/stripe", authentication, stripeRouter);
