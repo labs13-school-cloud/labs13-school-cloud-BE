@@ -39,8 +39,7 @@ function getAll() {
       "t.subject",
       "t.title",
       "t.user_id",
-      "u.first_name",
-      "u.last_name"
+      "u.name"
     )
     .leftJoin("users AS u", { "u.id": "t.user_id" })
     .then(training_series => training_series);
