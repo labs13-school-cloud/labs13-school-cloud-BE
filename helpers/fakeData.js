@@ -19,8 +19,9 @@ module.exports = {
 function addVolunteersToSeries() {
   const newRelation = [];
   const fakeRelation = () => ({
+    finished: faker.random.boolean(),
     volunteer_id: faker.random.number({ min: 1, max: relationSeeds }),
-    training_series_id: faker.random.number({ min: 1, max: seriesSeeds })
+    training_series_id: faker.random.number({ min: 1, max: userSeeds })
   });
   for (let i = 0; i < relationSeeds; i++) {
     newRelation.push(fakeRelation());
@@ -53,7 +54,7 @@ function createFakeTrainingSeries() {
     })
   });
 
-  for (let i = 0; i < seriesSeeds; i++) {
+  for (let i = 0; i < userSeeds; i++) {
     newSeries.push(fakeSeries());
   }
 
@@ -68,10 +69,10 @@ function createFakeMessages() {
     link: faker.internet.url(),
     training_series_id: faker.random.number({
       min: 1,
-      max: seriesSeeds
+      max: userSeeds
     })
   });
-  for (let i = 0; i < messageSeeds; i++) {
+  for (let i = 0; i < userSeeds; i++) {
     newMessages.push(fakeMessage());
   }
   return newMessages;

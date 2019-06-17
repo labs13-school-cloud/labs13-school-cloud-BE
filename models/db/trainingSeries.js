@@ -20,8 +20,21 @@ module.exports = {
  */
 function find(filters) {
   return db("training_series AS ts")
-    .select("ts.id", "ts.title", "u.email AS user")
-    .join("users AS u", { "ts.user_id": "u.id" })
+    .select(
+      "ts.id",
+      "ts.subject",
+      "ts.title",
+      "ts.user_id",
+      "u.first_name",
+      "u.last_name",
+      "tsv.finished",
+      "m.link"
+    )
+    .leftJoin("users AS u", { "ts.user_id": "u.id" })
+    .leftJoin("messages AS m", { "m.training_series_id": "ts.user_id" })
+    .leftJoin("training_series_volunteers AS tsv", {
+      "tsv.training_series_id": "ts.id"
+    })
     .where(filters);
 }
 
@@ -33,15 +46,22 @@ function find(filters) {
  * @returns {Promise} - A Promise that resolves to an array of training series objects
  */
 function getAll() {
-  return db("training_series AS t")
+  return db("training_series AS ts")
     .select(
-      "t.id",
-      "t.subject",
-      "t.title",
-      "t.user_id",
-      "u.name"
+      "ts.id",
+      "ts.subject",
+      "ts.title",
+      "ts.user_id",
+      "u.first_name",
+      "u.last_name",
+      "tsv.finished",
+      "tsv.training_series_id"
     )
-    .leftJoin("users AS u", { "u.id": "t.user_id" })
+    .leftJoin("users AS u", { "u.id": "ts.user_id" })
+    .leftJoin("training_series_volunteers AS tsv", {
+      "tsv.training_series_id": "ts.id"
+    })
+
     .then(training_series => training_series);
 }
 
