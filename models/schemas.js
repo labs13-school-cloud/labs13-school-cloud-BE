@@ -29,17 +29,17 @@ const classesSchema = {
     .required(),
   subject: Joi.string().required(),
   teacher_name: Joi.string().required(),
-  number_of_students: Joi.number().integer(),
+  number_of_students: Joi.number().integer()
 };
 
 const classesVolunteersSchema = {
   volunteer_id: Joi.number()
-    .integer().
-    required(),
+    .integer()
+    .required(),
   class_id: Joi.number()
     .integer()
     .required()
-}
+};
 
 const trainingSeriesSchema = {
   title: Joi.string().required(),
@@ -57,8 +57,8 @@ const trainingSeriesVolunteersSchema = {
     .required(),
   training_series_id: Joi.number()
     .integer()
-    .required(),
-}
+    .required()
+};
 
 // id, subject, body, link, training_series_id, for_volunteer, days_from_start
 

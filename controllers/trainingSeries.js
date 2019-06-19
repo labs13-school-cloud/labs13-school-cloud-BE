@@ -253,6 +253,35 @@ router.delete("/:id/volunteers/:user_id", async (req, res) => {
     message: "The volunteer has been removed from the training series."
   });
 });
+// Get request /api/training-series/volunteers/:user_id
+router.get("/volunteers/:user_id", async (req, res) => {
+  /**
+   * get a volunteers specific training series
+   *
+   * @function
+   * @param {Object} req - The Express request object
+   * @param {Object} res - The Express response object
+   * @returns {Object} - The Express response object
+   */
+  const { user_id: id } = req.params; // Destructure the ID from the req.params
+
+  const volunteer = await TrainingSeriesVolunteers.find({
+    "tsv.volunteer_id": id
+  }); // Store the training series in a variable
+
+  if (!volunteer) {
+    return res.status(404).json({
+      message: "Sorry! That volunteer is not assigned to any training series."
+    });
+  }
+
+  // *console.log(trainingSeries);
+  const trainingSeries = await TrainingSeriesVolunteers.find({
+    "tsv.volunteer_id": id
+  });
+
+  res.status(200).json({ volunteer, trainingSeries }); // Return an array of volunteers
+});
 
 //! Might not need anymore
 router.get("/:id/assignees", async (req, res) => {
