@@ -27,24 +27,6 @@ router.route("/").get(async (req, res) => {
 	res.status(200).json({ users });
 });
 
-router.route("/:email").get(async (req, res) => {
-    const { email } = req.params;
-    
-    const user = await Users.find({
-        "u.email": email
-    }).first();
-
-    if (user.length <= 0) {
-        return res.status(404).json({
-            message: 'Could not find the user in the database'
-        })
-    }
-
-    return res.status(200).json({
-        user
-    })
-})
-
 //GET - All volunteers /api/users/volunteers
 router.route("/volunteers").get(async (req, res) => {
 	/**
@@ -133,6 +115,24 @@ router.route("/volunteers/donator").get(async (req, res) => {
 });
 
 //* If needed can add endpoint to get all donators not just donators that are volunteers
+
+router.route("/:email").get(async (req, res) => {
+    const { email } = req.params;
+    
+    const user = await Users.find({
+        "u.email": email
+    }).first();
+
+    if (user.length <= 0) {
+        return res.status(404).json({
+            message: 'Could not find the user in the database'
+        })
+    }
+
+    return res.status(200).json({
+        user
+    })
+})
 
 //Delete a user of particular id
 router.route("/:id").delete(async (req, res) => {

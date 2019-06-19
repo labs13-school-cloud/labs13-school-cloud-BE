@@ -25,8 +25,7 @@ function find(filters) {
       "ts.subject",
       "ts.title",
       "ts.user_id",
-      "u.first_name",
-      "u.last_name",
+      "u.name",
       "tsv.finished",
       "m.link"
     )
@@ -52,11 +51,8 @@ function getAll() {
       "ts.subject",
       "ts.title",
       "ts.user_id",
-      "u.first_name",
-      "u.last_name",
-      "tsv.finished",
-      "tsv.training_series_id"
-    )
+      "u.name",
+      "tsv.finished"    )
     .leftJoin("users AS u", { "u.id": "ts.user_id" })
     .leftJoin("training_series_volunteers AS tsv", {
       "tsv.training_series_id": "ts.id"
