@@ -17,18 +17,16 @@ function find(filters) {
         "u.stripe AS stripe",
         "u.role AS role",
         "u.approved AS approved",
-        "u.donator AS donator",
+        "u.donator AS donator"
       )
       .where(filters);
   }
-  return db("users AS u")
-    .select(
-      "u.id AS id",
-      "u.name AS name",
-      "u.last_name AS last_name",
-      "u.email AS email",
-      "u.stripe AS stripe",
-    )
+  return db("users AS u").select(
+    "u.id AS id",
+    "u.name AS name",
+    "u.email AS email",
+    "u.stripe AS stripe"
+  );
 }
 
 function add(user) {

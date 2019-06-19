@@ -25,8 +25,7 @@ function find(filters) {
       "ts.subject",
       "ts.title",
       "ts.user_id",
-      "u.first_name",
-      "u.last_name",
+      "u.name",
       "tsv.finished",
       "m.link"
     )
@@ -47,20 +46,8 @@ function find(filters) {
  */
 function getAll() {
   return db("training_series AS ts")
-    .select(
-      "ts.id",
-      "ts.subject",
-      "ts.title",
-      "ts.user_id",
-      "u.first_name",
-      "u.last_name",
-      "tsv.finished",
-      "tsv.training_series_id"
-    )
+    .select("ts.id", "ts.subject", "ts.title", "ts.user_id", "u.name")
     .leftJoin("users AS u", { "u.id": "ts.user_id" })
-    .leftJoin("training_series_volunteers AS tsv", {
-      "tsv.training_series_id": "ts.id"
-    })
 
     .then(training_series => training_series);
 }
