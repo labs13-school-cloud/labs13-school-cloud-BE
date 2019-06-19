@@ -25,8 +25,8 @@ function find(filters) {
       "ts.subject",
       "ts.title",
       "ts.user_id",
-      "u.first_name",
-      "u.last_name",
+      "u.name",
+      // "u.last_name",
       "tsv.finished",
       "m.link"
     )
@@ -52,8 +52,8 @@ function getAll() {
       "ts.subject",
       "ts.title",
       "ts.user_id",
-      "u.first_name",
-      "u.last_name",
+      "u.name",
+      // "u.last_name",
       "tsv.finished",
       "tsv.training_series_id"
     )
