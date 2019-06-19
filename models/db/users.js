@@ -7,27 +7,16 @@ module.exports = {
   remove
 };
 
-function find(filters) {
-  if (filters) {
-    return db("users AS u")
-      .select(
-        "u.id AS id",
-        "u.name AS name",
-        "u.email AS email",
-        "u.stripe AS stripe",
-        "u.role AS role",
-        "u.approved AS approved",
-        "u.donator AS donator",
-      )
-      .where(filters);
-  }
+function find() {
   return db("users AS u")
     .select(
       "u.id AS id",
       "u.name AS name",
-      "u.last_name AS last_name",
       "u.email AS email",
       "u.stripe AS stripe",
+      "u.donator AS donator",
+      "u.approved AS approved",
+      "u.role AS role"
     )
 }
 
