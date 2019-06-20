@@ -23,16 +23,22 @@ router
      * @param {Object} res - The Express response object
      * @returns {Object} - The Express response object
      */
-    // Destructure the authenticated User email off of res.locals
-    // const { email } = res.locals.user;
-    // Get all training series from the database that are associated with the authenticated User
+	// Get all of the training series in the database
     const trainingSeries = await TrainingSeries.getAll();
-    // const trainingSeries = await TrainingSeries.find({
-    // 	"u.email": email,
-    // });
-    // Return the found training series to client
-    res.status(200).json({ trainingSeries });
-    // res.send("hello")
+
+	// Collect an array of promises 
+    const volunteerPromises = trainingSeries.map(async series => {
+      const volunteers = await TrainingSeriesVolunteers.find({
+        "tsv.training_series_id": series.id
+	  });
+	  return {
+		  ...series,
+		  volunteers
+	  }
+    });
+
+	// Resolve all promises and return training series and the volunteers in it
+	Promise.all(volunteerPromises).then(results => res.status(200).json({ trainingSeries: results }))
   })
   .post(validation(trainingSeriesSchema), async (req, res) => {
     /**
@@ -198,11 +204,11 @@ router.get("/:id/volunteers", async (req, res) => {
     "tsv.training_series_id": id
   });
 
-  // if (!volunteers.length) {
-  //   return res.status(404).json({
-  //     message: "This training series currently has no volunteers assigned"
-  //   });
-  // }
+  if (!volunteers.length) {
+    return res.status(404).json({
+      message: "This training series currently has no volunteers assigned"
+    });
+  }
 
   res.status(200).json({ trainingSeries, volunteers }); // Return an array of volunteers
 });

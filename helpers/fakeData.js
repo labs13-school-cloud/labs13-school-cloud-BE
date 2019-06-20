@@ -85,7 +85,7 @@ function createFakeClasses() {
     grade_level: faker.random.number({ min: 1, max: 11 }),
     subject: faker.commerce.department(),
     teacher_name: faker.name.firstName(),
-    number_of_students: faker.random.number({ min: 1, max: 5 })
+    number_of_students: faker.random.number({ min: 30, max: 60 })
   });
   for (let i = 0; i < userSeeds; i++) {
     newClasses.push(fakeClasses());

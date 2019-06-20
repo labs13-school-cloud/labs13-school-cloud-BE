@@ -21,12 +21,15 @@ function find(filters) {
       )
       .where(filters);
   }
-  return db("users AS u").select(
-    "u.id AS id",
-    "u.name AS name",
-    "u.email AS email",
-    "u.stripe AS stripe"
-  );
+  return db("users AS u")
+    .select(
+      "u.id AS id",
+      "u.name AS name",
+      "u.email AS email",
+      "u.stripe AS stripe",
+      "u.donator AS donator",
+      "u.approved AS approved"
+    )
 }
 
 function add(user) {

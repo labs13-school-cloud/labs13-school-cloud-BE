@@ -46,9 +46,14 @@ function find(filters) {
  */
 function getAll() {
   return db("training_series AS ts")
-    .select("ts.id", "ts.subject", "ts.title", "ts.user_id", "u.name")
+    .select(
+      "ts.id",
+      "ts.subject",
+      "ts.title",
+      "ts.user_id",
+      "u.name",
+    )
     .leftJoin("users AS u", { "u.id": "ts.user_id" })
-
     .then(training_series => training_series);
 }
 
