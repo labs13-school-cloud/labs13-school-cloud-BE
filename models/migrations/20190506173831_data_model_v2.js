@@ -95,10 +95,6 @@ exports.up = function(knex, Promise) {
       tbl.text("body").notNullable();
       tbl.text("link");
       tbl
-        .boolean("for_volunteer")
-        .defaultTo(0)
-        .notNullable();
-      tbl
         .integer("training_series_id")
         .references("id")
         .inTable("training_series")
