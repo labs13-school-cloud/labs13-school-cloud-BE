@@ -25,15 +25,8 @@ function find(filters) {
       "ts.subject",
       "ts.title",
       "ts.user_id",
-      "u.name",
-      "tsv.finished",
-      "m.link"
-    )
+      "u.name"    )
     .leftJoin("users AS u", { "ts.user_id": "u.id" })
-    .leftJoin("messages AS m", { "m.training_series_id": "ts.user_id" })
-    .leftJoin("training_series_volunteers AS tsv", {
-      "tsv.training_series_id": "ts.id"
-    })
     .where(filters);
 }
 
