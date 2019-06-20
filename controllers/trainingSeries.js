@@ -253,7 +253,7 @@ router.delete("/:id/volunteers/:user_id", async (req, res) => {
     message: "The volunteer has been removed from the training series."
   });
 });
-// Get request /api/training-series/volunteer/:user_id
+// Get request /api/training-series/volunteers/:user_id
 router.get("/volunteers/:user_id", async (req, res) => {
   /**
    * get a volunteers specific training series
