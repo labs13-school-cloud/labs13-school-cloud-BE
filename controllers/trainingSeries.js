@@ -269,24 +269,24 @@ router.get("/volunteers/:user_id", async (req, res) => {
    * @param {Object} res - The Express response object
    * @returns {Object} - The Express response object
    */
-  const { user_id: id } = req.params; // Destructure the ID from the req.params
+  const { user_id: volunteer_id } = req.params;
+  // Destructure the ID from the req.params
 
-  const volunteer = await TrainingSeriesVolunteers.find({
-    "tsv.volunteer_id": id
-  }); // Store the training series in a variable
+  const volunteer = await Users.find({
+    "u.id": volunteer_id
+  }); // Search for volunteer and store in a variable
 
-  if (!volunteer) {
+  if (!volunteer.length) {
+    // Checks it user does not have any training series assigned to them
     return res.status(404).json({
       message: "Sorry! That volunteer is not assigned to any training series."
     });
   }
+  const trainingSeries = await TrainingSeriesVolunteers.findVolunteerTS({
+    "tsv.volunteer_id": volunteer_id
+  }); // Get all training series
 
-  // *console.log(trainingSeries);
-  const trainingSeries = await TrainingSeriesVolunteers.find({
-    "tsv.volunteer_id": id
-  });
-
-  res.status(200).json({ volunteer, trainingSeries }); // Return an array of volunteers
+  return res.status(200).json({ volunteer, trainingSeries }); // Return an array of volunteer and training series
 });
 
 //! Might not need anymore
