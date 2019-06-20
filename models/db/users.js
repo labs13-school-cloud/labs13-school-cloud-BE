@@ -25,9 +25,10 @@ function find(filters) {
     .select(
       "u.id AS id",
       "u.name AS name",
-      "u.last_name AS last_name",
       "u.email AS email",
       "u.stripe AS stripe",
+      "u.donator AS donator",
+      "u.approved AS approved"
     )
 }
 
