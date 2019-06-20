@@ -20,7 +20,7 @@ module.exports = {
 //  * @returns {Promise} - A Promise that  resolves to an array of Class objects
 //  */
 function find() {
-    return db("classes")
+    return db("classes").orderBy("id")
 }
 
 /**
