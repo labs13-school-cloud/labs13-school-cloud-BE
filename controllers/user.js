@@ -156,7 +156,8 @@ router.route("/:id").delete(async (req, res) => {
 
 	// Return a message to the client to confirm that the user was deleted
 	return res.status(200).json({
-		message: "User account removed successfully.",
+		id: deleted,
+		message: "User account removed successfully."
 	});
 });
 
