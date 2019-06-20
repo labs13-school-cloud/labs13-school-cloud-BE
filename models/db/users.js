@@ -17,7 +17,7 @@ function find(filters) {
         "u.stripe AS stripe",
         "u.role AS role",
         "u.approved AS approved",
-        "u.donator AS donator",
+        "u.donator AS donator"
       )
       .where(filters);
   }
