@@ -27,18 +27,19 @@ router
     const trainingSeries = await TrainingSeries.getAll();
 
 	// Collect an array of promises 
-    const volunteerPromises = trainingSeries.map(async series => {
-      const volunteers = await TrainingSeriesVolunteers.find({
-        "tsv.training_series_id": series.id
-	  });
-	  return {
-		  ...series,
-		  volunteers
-	  }
-    });
+    // const volunteerPromises = trainingSeries.map(async series => {
+    //   const volunteers = await TrainingSeriesVolunteers.find({
+    //     "tsv.training_series_id": series.id
+	  // });
+	  // return {
+		//   ...series,
+		//   volunteers
+	  // }
+    // });
 
 	// Resolve all promises and return training series and the volunteers in it
-	Promise.all(volunteerPromises).then(results => res.status(200).json({ trainingSeries: results }))
+  // Promise.all(volunteerPromises).then(results => res.status(200).json({ trainingSeries: results }))
+    return res.status(200).json({ trainingSeries })
   })
   .post(validation(trainingSeriesSchema), async (req, res) => {
     /**
