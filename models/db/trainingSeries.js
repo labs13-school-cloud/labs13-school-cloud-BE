@@ -37,8 +37,11 @@ function find(filters) {
  *
  * @returns {Promise} - A Promise that resolves to an array of training series objects
  */
-function getAll() {
-  return db("training_series AS ts")
+async function getAll () {
+
+  const trainingSeries =  db("training_series AS ts")
+    .leftJoin("users AS u", { "u.id": "ts.user_id" })
+    .leftJoin("training_series_volunteers AS tsv", { "tsv.training_series_id": "ts.id" })
     .select(
       "ts.id",
       "ts.subject",
@@ -46,8 +49,7 @@ function getAll() {
       "ts.user_id",
       "u.name",
     )
-    .leftJoin("users AS u", { "u.id": "ts.user_id" })
-    .then(training_series => training_series);
+  return trainingSeries
 }
 
 /**
