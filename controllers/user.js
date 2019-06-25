@@ -7,7 +7,7 @@ const Users = require("../models/db/users");
 //GET - All users /api/users
 router.route("/").get(async (req, res) => {
 	/**
-	 * Get all users associated with an authenticated user
+	 * Get all users in the database
 	 *
 	 * @function
 	 * @param {Object} req - The Express request object
