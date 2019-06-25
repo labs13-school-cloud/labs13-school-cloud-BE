@@ -204,12 +204,12 @@ router.get("/:id/volunteers", async (req, res) => {
   const volunteers = await TrainingSeriesVolunteers.find({
     "tsv.training_series_id": id
   });
-
-  if (!volunteers.length) {
-    return res.status(404).json({
-      message: "This training series currently has no volunteers assigned"
-    });
-  }
+  // removing since this causes errors in the React app if no volunteers found
+  // if (!volunteers.length) {
+  //   return res.status(404).json({
+  //     message: "This training series currently has no volunteers assigned"
+  //   });
+  // }
 
   res.status(200).json({ trainingSeries, volunteers }); // Return an array of volunteers
 });
