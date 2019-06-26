@@ -4,7 +4,7 @@
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-> An Express + Node.js API for Training Bot
+> An Express + Node.js API for School in the Cloud
 
 ## Table of Contents
 
