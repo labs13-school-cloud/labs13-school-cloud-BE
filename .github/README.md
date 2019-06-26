@@ -1,6 +1,6 @@
-# Training Bot API
+# School in the Cloud API
 
-![banner](img/logo.png)
+![banner](img/cloud.png)
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
@@ -31,7 +31,7 @@ TODO: Write background section
 
 ## Deploy
 
-This project has an `app.json` file, which allows us to offer "one-click deployment" to Heroku. This will allow you to get your own version of Training Bot up and running both quickly and painlessly.
+This project has an `app.json` file, which allows us to offer "one-click deployment" to Heroku. This will allow you to get your own version of School in the cloud up and running both quickly and painlessly.
 
 **NOTE:** Before clicking the button below you'll want to make sure you've completed the [prerequisite setup steps](../docs/prerequisites.md) in the [complete documentation](../docs/README.md).
 
@@ -41,7 +41,7 @@ This project has an `app.json` file, which allows us to offer "one-click deploym
 
 ### Authentication
 
-Most routes require authentication, and Training Bot handles authentication by looking for a valid JWT's on the `Authorization` header of a given request.
+Most routes require authentication, and School in the Cloud handles authentication by looking for a valid JWT's on the `Authorization` header of a given request.
 
 Valid JWTs are provided by the Auth0 integration with our [React application](https://github.com/labs12-training-bot-2/labs12-training-bot-2-FE). However -- for testing -- You can get a token programattically using the [Auth0 Management API](https://auth0.com/docs/api/management/v2/get-access-tokens-for-test).
 
@@ -105,18 +105,6 @@ Valid JWTs are provided by the Auth0 integration with our [React application](ht
 
 ---
 
-<!-- #### Stripe
-
-| route                      | methods | description                                                                   |                                                          Docs                                                           |
-| :------------------------- | :-----: | :---------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------: |
-| `api/stripe/`              |  POST   | allows user to update/change their stripe plan.                               | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L120-L168) |
-| `api/stripe/register`      |  POST   | register the user with stripe's API to get a stripe ID                        | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L169-L198) |
-| `api/stripe/unsubscribe`   |  POST   | allows user to unsubscribe from their current plan.                           | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L200-L223) |
-| `api/stripe/plans`         |   GET   | allows user to see available plans (basic, premium, pro)                      | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L225-L256) |
-| `api/stripe/subscriptions` |   GET   | Allows the user to access the three subscription that go with the three plans | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L257-L278) |
-| `api/stripe/customer/plan` |   GET   | Shows the user what their current plan is                                     | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L279-L294) |
-| `api/stripe/paymentintent` |  POST   | required by the stripe API to be able to collect credit card payments.        | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L296-L316) | -->
-
 
 #### Notifications
 
@@ -141,5 +129,17 @@ Valid JWTs are provided by the Auth0 integration with our [React application](ht
 | `api/responses/slack` | POST | Create a new Slack Response | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/responses.js#L214-L264)  |
 
 --- -->
+
+<!-- #### Stripe
+
+| route                      | methods | description                                                                   |                                                          Docs                                                           |
+| :------------------------- | :-----: | :---------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------: |
+| `api/stripe/`              |  POST   | allows user to update/change their stripe plan.                               | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L120-L168) |
+| `api/stripe/register`      |  POST   | register the user with stripe's API to get a stripe ID                        | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L169-L198) |
+| `api/stripe/unsubscribe`   |  POST   | allows user to unsubscribe from their current plan.                           | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L200-L223) |
+| `api/stripe/plans`         |   GET   | allows user to see available plans (basic, premium, pro)                      | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L225-L256) |
+| `api/stripe/subscriptions` |   GET   | Allows the user to access the three subscription that go with the three plans | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L257-L278) |
+| `api/stripe/customer/plan` |   GET   | Shows the user what their current plan is                                     | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L279-L294) |
+| `api/stripe/paymentintent` |  POST   | required by the stripe API to be able to collect credit card payments.        | [JS Doc](https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE/blob/master/controllers/stripe.js#L296-L316) | -->
 
 ## Maintainers
