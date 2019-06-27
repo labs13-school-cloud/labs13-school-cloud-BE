@@ -1,8 +1,8 @@
 {
-  "name": "Training Bot",
-  "description": "An Express + Node.js API for Training Bot",
-  "repository": "https://github.com/labs12-training-bot-2/labs12-training-bot-2-BE",
-  "logo": "https://i.imgur.com/izl59sH.png",
+  "name": "School in the CLoud",
+  "description": "An Express + Node.js API for School in the Cloud",
+  "repository": "https://github.com/labs13-school-cloud/labs13-school-cloud-BE",
+  "logo": "https://i.imgur.com/jm8jMeN.png",
   "keywords": [
     "node",
     "express",
