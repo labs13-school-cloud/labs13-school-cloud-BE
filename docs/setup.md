@@ -12,11 +12,11 @@ This document will explain what's needed to set up your local development enviro
 
 ## Required tools
 
-The following tools or pieces of software are required to set up a local developer environment for Training Bot.
+The following tools or pieces of software are required to set up a local developer environment for School in the Cloud.
 
 ### PostgreSQL
 
-Both the development and production databases for Training Bot are designed for PostgreSQL. This means that in order to run the API locally, you'll need to install PostgreSQL on your system.
+Both the development and production databases for School in the Cloud are designed for PostgreSQL. This means that in order to run the API locally, you'll need to install PostgreSQL on your system.
 
 The reason for this is consistency, since Lambda Labs teams don't have a staging/dev server to work with, ensuring that your local devlopment database mirrors the production database is essential if you want to write the right code the first time.
 

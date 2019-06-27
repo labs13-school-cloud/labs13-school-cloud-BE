@@ -39,7 +39,7 @@ function find(filters) {
  */
 async function getAll () {
 
-  const trainingSeries =  db("training_series AS ts")
+  const trainingSeries = await db("training_series AS ts")
     .leftJoin("users AS u", { "u.id": "ts.user_id" })
     .leftJoin("training_series_volunteers AS tsv", { "tsv.training_series_id": "ts.id" })
     .select(

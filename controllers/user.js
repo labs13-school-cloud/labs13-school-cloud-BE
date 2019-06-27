@@ -6,6 +6,7 @@ const Users = require("../models/db/users");
 
 //GET - All users /api/users
 router.route("/").get(async (req, res) => {
+<<<<<<< HEAD
   /**
    * Get all users associated with an authenticated user
    *
@@ -25,6 +26,27 @@ router.route("/").get(async (req, res) => {
 
   // Return all users to client
   res.status(200).json({ users });
+=======
+	/**
+	 * Get all users in the database
+	 *
+	 * @function
+	 * @param {Object} req - The Express request object
+	 * @param {Object} res - The Express response object
+	 * @returns {Object} - The Express response object
+	 */
+
+	const users = await Users.find();
+
+	if (!users) {
+		return res.status(404).json({
+			message: "Unable to locate any users.",
+		});
+	}
+
+	// Return all users to client
+	res.status(200).json({ users });
+>>>>>>> 97895e3dc40a0891386e202fe883e5661caa0653
 });
 
 //GET - All volunteers /api/users/volunteers

@@ -17,28 +17,16 @@ router
   .route("/")
   .get(async (req, res) => {
     /**
-     * Get all training series associated with an authenticated user.
+     * Get all training series in the database.
      * @function
      * @param {Object} req - The Express request object
      * @param {Object} res - The Express response object
      * @returns {Object} - The Express response object
      */
+
 	// Get all of the training series in the database
     const trainingSeries = await TrainingSeries.getAll();
 
-	// Collect an array of promises 
-    // const volunteerPromises = trainingSeries.map(async series => {
-    //   const volunteers = await TrainingSeriesVolunteers.find({
-    //     "tsv.training_series_id": series.id
-	  // });
-	  // return {
-		//   ...series,
-		//   volunteers
-	  // }
-    // });
-
-	// Resolve all promises and return training series and the volunteers in it
-  // Promise.all(volunteerPromises).then(results => res.status(200).json({ trainingSeries: results }))
     return res.status(200).json({ trainingSeries })
   })
   .post(validation(trainingSeriesSchema), async (req, res) => {
@@ -288,52 +276,6 @@ router.get("/volunteers/:user_id", async (req, res) => {
   }); // Get all training series
 
   return res.status(200).json({ volunteer, trainingSeries }); // Return an array of volunteer and training series
-});
-
-//! Might not need anymore
-router.get("/:id/assignees", async (req, res) => {
-  /**
-   * get the team members for the specific training series
-   *
-   * @function
-   * @param {Object} req - The Express request object
-   * @param {Object} res - The Express response object
-   * @returns {Object} - The Express response object
-   */
-
-  // Destructure the ID off of the request object
-  const { id } = req.params;
-
-  // Get all Messages meant for Team Members
-  const messages = await Messages.find({
-    "ts.id": id,
-    "m.for_team_member": true
-  });
-
-  // If no Messages are found, return a 404
-  if (!messages.length) {
-    return res.status(404).json({
-      message: "This Training Series has no messages meant for Team Members"
-    });
-  }
-
-  // Create an array of pending promises for each
-  // notification matching a message
-  const pAssignees = messages.map(
-    async m =>
-      await Notifications.find({
-        "m.id": m.id
-      })
-  );
-
-  // Resolve all promises in the pAssignees array
-  const rAssignees = await Promise.all(pAssignees);
-
-  // Recursively flatten the array
-  const assignedTeamMembers = arrayFlat(rAssignees);
-
-  // Return the assigned Team Members to the client
-  return res.status(200).json({ assignedTeamMembers });
 });
 
 module.exports = router;
