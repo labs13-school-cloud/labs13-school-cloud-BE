@@ -19,16 +19,18 @@ function find(filters) {
     .select(
       "cv.id",
       "cv.volunteer_id",
-      "cv.classes_id",
+      "cv.class_id",
       "u.name",
       "u.email",
-      "u.role",
-      "u.approved"
+      "c.class_name",
+      "c.subject",
+      "c.teacher_name",
+      "c.number_of_students"
     )
-    .leftJoin("classes AS c", { "c.id": "cv.classes_id" })
-    .leftJoin("users AS u", { "u.id": "cv.volunteer_id" })
+    .leftJoin("classes AS c", { "c.id": "cv.class_id" })
+    .leftJoin("users AS u", { "cv.volunteer_id": "u.id" })
     .where(filters)
-    .orderBy("id");
+    .orderBy("cv.class_id");
 }
 
 /**
@@ -46,8 +48,7 @@ function add(relation) {
     .then(r =>
       find({
         "cv.volunteer_id": r[0].volunteer_id,
-        "cv.class_id": r[0].classes_id,
-        "u.role": "volunteer"
+        "cv.class_id": r[0].class_id
       }).first()
     );
 }

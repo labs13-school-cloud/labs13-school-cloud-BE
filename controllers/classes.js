@@ -187,11 +187,11 @@ router.route("/:id/volunteers").get(async (req, res) => {
 
 router.route("/:id/volunteers").post(async (req, res) => {
   const { user_id: volunteer_id } = req.body;
-  const { id: classes_id } = req.params;
+  const { id: class_id } = req.params;
 
   const relation = await ClassesVolunteers.find({
     "cv.volunteer_id": volunteer_id,
-    "cv.classes_id": classes_id
+    "cv.class_id": class_id
   }).first();
 
   if (relation) {
@@ -202,7 +202,7 @@ router.route("/:id/volunteers").post(async (req, res) => {
 
   const newRelation = await ClassesVolunteers.add({
     volunteer_id,
-    classes_id
+    class_id
   });
 
   return res.status(200).json({ newRelation });
