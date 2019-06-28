@@ -30,6 +30,7 @@ router.route("/").get((req, res) => {
     .then(Classes => {
       res.status(200).json(Classes);
     })
+})
 
 
 router
@@ -230,10 +231,6 @@ router
             message: "This volunteer has successfully been removed from this class."
         })
     })
-    .catch(err => {
-      res.status(500).json({ err: "This class could not be retrieved" });
-    });
-});
 
 router.route("/").post(async (req, res) => {
   /**
