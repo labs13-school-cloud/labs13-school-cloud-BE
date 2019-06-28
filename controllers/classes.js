@@ -213,7 +213,7 @@ router.route("/:id/volunteers/:user_id").delete(async (req, res) => {
 
   const volunteer = await ClassesVolunteers.find({
     "cv.volunteer_id": volunteer_id,
-    "cv.classes_id": classes_id
+    "cv.class_id": classes_id
   });
 
   if (!volunteer) {
@@ -224,7 +224,7 @@ router.route("/:id/volunteers/:user_id").delete(async (req, res) => {
 
   const deleted = await ClassesVolunteers.remove({
     "cv.volunteer_id": volunteer_id,
-    "cv.classes_id": classes_id
+    "cv.class_id": classes_id
   });
 
   return res.status(200).json({

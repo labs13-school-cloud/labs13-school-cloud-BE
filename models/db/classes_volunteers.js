@@ -63,7 +63,7 @@ function add(relation) {
  * @returns
  */
 function remove(filter) {
-  return db("classes_volunteers")
+  return db("classes_volunteers as cv")
     .where(filter)
     .del();
 }
