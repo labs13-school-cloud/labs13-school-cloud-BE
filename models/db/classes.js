@@ -19,7 +19,10 @@ module.exports = {
 //  * 
 //  * @returns {Promise} - A Promise that  resolves to an array of Class objects
 //  */
-function find() {
+function find(filters) {
+    if (filters) {
+        return db("classes AS c").where(filters);
+    }
     return db("classes").orderBy("id")
 }
 
@@ -53,7 +56,7 @@ function findById(id) {
 function add(classes) {
     return db("classes")
       .insert(classes, ["*"])
-      .then(c => find({ "c.id": c[0].id }).first());
+      .then(c => find({ "c.id": c[0].id }).first())
 }
 
 
